@@ -21,8 +21,8 @@ public class DeviceTest {
 	}
 
 	@Test
-	public void canReadManufacturer() {
-		assertCorrectResource(0, "Zatar Example Devices Inc.");
+	public void readOnManufacturerContent() {
+		assertContentRead(0, "Zatar Example Devices Inc.");
 	}
 
 	@Test
@@ -31,26 +31,26 @@ public class DeviceTest {
 	}
 
 	@Test
-	public void canReadModel() {
-		assertCorrectResource(1, "zatarex1");
+	public void readOnModelContent() {
+		assertContentRead(1, "zatarex1");
 	}
 
 	@Test
-	public void canReadSerialNumber() {
-		assertCorrectResource(2, "ZE98765");
+	public void readOnSerialNumberContent() {
+		assertContentRead(2, "ZE98765");
 	}
 
 	@Test
-	public void correctNotFoundResource() {
-		assertNotFoundResource(150);
+	public void readOnMissingResourceNotFound() {
+		assertNotFoundRead(150);
 	}
 
 	@Test
-	public void writeOnMissingResouceNotAllowed() {
+	public void writeOnMissingResouceNotFound() {
 		assertNotFoundWrite(150, "Whatever you are...");
 	}
 
-	private void assertCorrectResource(final int resourceId, final String value) {
+	private void assertContentRead(final int resourceId, final String value) {
 		final ValueResponse response = dev.read(resourceId);
 
 		assertEquals(ResponseCode.CONTENT, response.getCode());
@@ -58,7 +58,7 @@ public class DeviceTest {
 				response.getContent());
 	}
 
-	private void assertNotFoundResource(final int resourceId) {
+	private void assertNotFoundRead(final int resourceId) {
 		final ValueResponse response = dev.read(resourceId);
 
 		assertEquals(ResponseCode.NOT_FOUND, response.getCode());
