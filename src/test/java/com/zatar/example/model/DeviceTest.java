@@ -6,6 +6,7 @@ import org.eclipse.leshan.ResponseCode;
 import org.eclipse.leshan.client.resource.LwM2mInstanceEnabler;
 import org.eclipse.leshan.core.node.LwM2mResource;
 import org.eclipse.leshan.core.node.Value;
+import org.eclipse.leshan.core.response.LwM2mResponse;
 import org.eclipse.leshan.core.response.ValueResponse;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +23,11 @@ public class DeviceTest {
 	@Test
 	public void canReadManufacturer() {
 		assertCorrectResource(0, "Zatar Example Devices Inc.");
+	}
+
+	@Test
+	public void writeOnManufacturerNotAllowed() {
+		assertNotAllowedWrite(0, "Some Other Manufacturer");
 	}
 
 	@Test
@@ -51,6 +57,12 @@ public class DeviceTest {
 		final ValueResponse response = dev.read(resourceId);
 
 		assertEquals(ResponseCode.NOT_FOUND, response.getCode());
+	}
+
+	private void assertNotAllowedWrite(final int resourceId, final String newValue) {
+		final LwM2mResponse response = dev.write(resourceId, new LwM2mResource(resourceId, Value.newStringValue(newValue)));
+
+		assertEquals(ResponseCode.METHOD_NOT_ALLOWED, response.getCode());
 	}
 
 }

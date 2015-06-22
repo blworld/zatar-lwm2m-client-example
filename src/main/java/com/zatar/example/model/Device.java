@@ -7,6 +7,7 @@ import org.eclipse.leshan.ResponseCode;
 import org.eclipse.leshan.client.resource.BaseInstanceEnabler;
 import org.eclipse.leshan.core.node.LwM2mResource;
 import org.eclipse.leshan.core.node.Value;
+import org.eclipse.leshan.core.response.LwM2mResponse;
 import org.eclipse.leshan.core.response.ValueResponse;
 
 public class Device extends BaseInstanceEnabler {
@@ -30,6 +31,11 @@ public class Device extends BaseInstanceEnabler {
 		} else {
 			return new ValueResponse(ResponseCode.NOT_FOUND);
 		}
+	}
+
+	@Override
+	public LwM2mResponse write(final int resourceId, final LwM2mResource node) {
+		return new LwM2mResponse(ResponseCode.METHOD_NOT_ALLOWED);
 	}
 
 	private boolean resourceExists(final int resourceId) {
