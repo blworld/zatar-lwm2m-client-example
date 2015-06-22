@@ -45,6 +45,11 @@ public class DeviceTest {
 		assertNotFoundResource(150);
 	}
 
+	@Test
+	public void writeOnMissingResouceNotAllowed() {
+		assertNotFoundWrite(150, "Whatever you are...");
+	}
+
 	private void assertCorrectResource(final int resourceId, final String value) {
 		final ValueResponse response = dev.read(resourceId);
 
@@ -63,6 +68,12 @@ public class DeviceTest {
 		final LwM2mResponse response = dev.write(resourceId, new LwM2mResource(resourceId, Value.newStringValue(newValue)));
 
 		assertEquals(ResponseCode.METHOD_NOT_ALLOWED, response.getCode());
+	}
+
+	private void assertNotFoundWrite(final int resourceId, final String newValue) {
+		final LwM2mResponse response = dev.write(resourceId, new LwM2mResource(resourceId, Value.newStringValue(newValue)));
+
+		assertEquals(ResponseCode.NOT_FOUND, response.getCode());
 	}
 
 }

@@ -35,7 +35,11 @@ public class Device extends BaseInstanceEnabler {
 
 	@Override
 	public LwM2mResponse write(final int resourceId, final LwM2mResource node) {
-		return new LwM2mResponse(ResponseCode.METHOD_NOT_ALLOWED);
+		if (resourceExists(resourceId)) {
+			return new LwM2mResponse(ResponseCode.METHOD_NOT_ALLOWED);
+		} else {
+			return new LwM2mResponse(ResponseCode.NOT_FOUND);
+		}
 	}
 
 	private boolean resourceExists(final int resourceId) {
