@@ -1,14 +1,25 @@
 package com.zatar.example.model;
 
+import static org.junit.Assert.assertEquals;
+
+import org.eclipse.leshan.ResponseCode;
 import org.eclipse.leshan.client.resource.LwM2mInstanceEnabler;
+import org.eclipse.leshan.core.node.LwM2mResource;
+import org.eclipse.leshan.core.node.Value;
+import org.eclipse.leshan.core.response.ValueResponse;
 import org.junit.Test;
 
 public class DeviceTest {
 
 	@Test
-	public void test() {
+	public void canReadManufacturer() {
 		final LwM2mInstanceEnabler dev = new Device();
-		dev.read(0);
+
+		final ValueResponse response = dev.read(0);
+
+		assertEquals(ResponseCode.CONTENT, response.getCode());
+		assertEquals(new LwM2mResource(0, Value.newStringValue("Zatar Example Devices Inc.")),
+				response.getContent());
 	}
 
 }
