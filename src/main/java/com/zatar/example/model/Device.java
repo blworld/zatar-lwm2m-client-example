@@ -22,7 +22,7 @@ public class Device extends BaseInstanceEnabler {
 		resources.put(0, new ReadOnlyResourceEnabler(0, MANUFACTURER));
 		resources.put(1, new ReadOnlyResourceEnabler(1, MODEL));
 		resources.put(2, new ReadOnlyResourceEnabler(2, SERIAL_NUMBER));
-		resources.put(14, new ReadOnlyResourceEnabler(14, "+05"));
+		resources.put(14, new ReadWriteResourceEnabler(14, "+05"));
 	}
 
 	@Override
@@ -67,6 +67,28 @@ public class Device extends BaseInstanceEnabler {
 		@Override
 		public LwM2mResponse write(final LwM2mResource node) {
 			return new LwM2mResponse(ResponseCode.METHOD_NOT_ALLOWED);
+		}
+
+	}
+
+	private class ReadWriteResourceEnabler implements ResourceEnabler {
+		private final int id;
+		private String value;
+
+		public ReadWriteResourceEnabler(final int id, final String value) {
+			this.id = id;
+			this.value = value;
+		}
+
+		@Override
+		public ValueResponse read() {
+			return new ValueResponse(ResponseCode.CONTENT, new LwM2mResource(id, Value.newStringValue(value)));
+		}
+
+		@Override
+		public LwM2mResponse write(final LwM2mResource node) {
+			value = (String) node.getValue().value;
+			return new LwM2mResponse(ResponseCode.CHANGED);
 		}
 
 	}
