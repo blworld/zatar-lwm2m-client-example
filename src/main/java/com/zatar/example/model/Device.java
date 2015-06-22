@@ -12,9 +12,10 @@ import org.eclipse.leshan.core.response.ValueResponse;
 
 public class Device extends BaseInstanceEnabler {
 
-	private static final String SERIAL_NUMBER = "ZE98765";
 	private static final String MANUFACTURER = "Zatar Example Devices Inc.";
 	private static final String MODEL = "zatarex1";
+	private static final String SERIAL_NUMBER = "ZE98765";
+	private static final String INITIAL_UTC_OFFSET = "+05";
 	private final Map<Integer, ResourceEnabler> resources;
 
 	public Device() {
@@ -22,7 +23,7 @@ public class Device extends BaseInstanceEnabler {
 		resources.put(0, new ReadOnlyResourceEnabler(0, MANUFACTURER));
 		resources.put(1, new ReadOnlyResourceEnabler(1, MODEL));
 		resources.put(2, new ReadOnlyResourceEnabler(2, SERIAL_NUMBER));
-		resources.put(14, new ReadWriteResourceEnabler(14, "+05"));
+		resources.put(14, new ReadWriteResourceEnabler(14, INITIAL_UTC_OFFSET));
 	}
 
 	@Override
