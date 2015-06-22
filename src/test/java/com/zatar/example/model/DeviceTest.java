@@ -21,19 +21,19 @@ public class DeviceTest {
 
 	@Test
 	public void canReadManufacturer() {
-		final ValueResponse response = dev.read(0);
-
-		assertEquals(ResponseCode.CONTENT, response.getCode());
-		assertEquals(new LwM2mResource(0, Value.newStringValue("Zatar Example Devices Inc.")),
-				response.getContent());
+		assertCorrectResource(0, "Zatar Example Devices Inc.");
 	}
 
 	@Test
 	public void canReadModel() {
-		final ValueResponse response = dev.read(1);
+		assertCorrectResource(1, "zatarex1");
+	}
+
+	private void assertCorrectResource(final int resourceId, final String value) {
+		final ValueResponse response = dev.read(resourceId);
 
 		assertEquals(ResponseCode.CONTENT, response.getCode());
-		assertEquals(new LwM2mResource(1, Value.newStringValue("zatarex1")),
+		assertEquals(new LwM2mResource(resourceId, Value.newStringValue(value)),
 				response.getContent());
 	}
 
