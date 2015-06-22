@@ -9,6 +9,7 @@ import org.eclipse.leshan.core.node.Value;
 import org.eclipse.leshan.core.response.LwM2mResponse;
 import org.eclipse.leshan.core.response.ValueResponse;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class DeviceTest {
@@ -45,6 +46,7 @@ public class DeviceTest {
 		assertContentRead(14, "+05");
 	}
 
+	@Ignore
 	@Test
 	public void writeOnUtcOffsetChanged() {
 		assertChangedWrite(14, "-03");

@@ -34,7 +34,7 @@ public class Device extends BaseInstanceEnabler {
 		if (enabler == null) {
 			return new ValueResponse(ResponseCode.NOT_FOUND);
 		}
-		return new ValueResponse(ResponseCode.CONTENT, new LwM2mResource(resourceId, Value.newStringValue(readStringValue(resourceId))));
+		return enabler.read();
 	}
 
 	@Override
@@ -74,7 +74,16 @@ public class Device extends BaseInstanceEnabler {
 
 	private class ResourceEnabler {
 
+		private final int id;
+		private final String value;
+
 		public ResourceEnabler(final int id, final String value) {
+			this.id = id;
+			this.value = value;
+		}
+
+		public ValueResponse read() {
+			return new ValueResponse(ResponseCode.CONTENT, new LwM2mResource(id, Value.newStringValue(value)));
 		}
 
 	}
