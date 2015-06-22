@@ -39,7 +39,8 @@ public class Device extends BaseInstanceEnabler {
 
 	@Override
 	public LwM2mResponse write(final int resourceId, final LwM2mResource node) {
-		if (resourceExists(resourceId)) {
+		final ResourceEnabler enabler = resources.get(resourceId);
+		if (enabler != null) {
 			if (resourceId == 14) {
 				@SuppressWarnings("unchecked")
 				final Value<String> value = (Value<String>) node.getValue();
