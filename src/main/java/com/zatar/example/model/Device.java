@@ -16,7 +16,7 @@ public class Device extends BaseInstanceEnabler {
 	private static final String MANUFACTURER = "Zatar Example Devices Inc.";
 	private static final String MODEL = "zatarex1";
 	private final Map<Integer, ResourceEnabler> resources;
-	private String utcOffset;
+	private final String utcOffset;
 
 	public Device() {
 		resources = new HashMap<>();
@@ -43,15 +43,7 @@ public class Device extends BaseInstanceEnabler {
 		if (enabler == null) {
 			return new LwM2mResponse(ResponseCode.NOT_FOUND);
 		}
-
-		if (resourceId == 14) {
-			@SuppressWarnings("unchecked")
-			final Value<String> value = (Value<String>) node.getValue();
-			utcOffset = value.value;
-			return new LwM2mResponse(ResponseCode.CHANGED);
-		} else {
-			return new LwM2mResponse(ResponseCode.METHOD_NOT_ALLOWED);
-		}
+		return new LwM2mResponse(ResponseCode.METHOD_NOT_ALLOWED);
 	}
 
 	private class ResourceEnabler {
