@@ -40,17 +40,17 @@ public class Device extends BaseInstanceEnabler {
 	@Override
 	public LwM2mResponse write(final int resourceId, final LwM2mResource node) {
 		final ResourceEnabler enabler = resources.get(resourceId);
-		if (enabler != null) {
-			if (resourceId == 14) {
-				@SuppressWarnings("unchecked")
-				final Value<String> value = (Value<String>) node.getValue();
-				utcOffset = value.value;
-				return new LwM2mResponse(ResponseCode.CHANGED);
-			} else {
-				return new LwM2mResponse(ResponseCode.METHOD_NOT_ALLOWED);
-			}
-		} else {
+		if (enabler == null) {
 			return new LwM2mResponse(ResponseCode.NOT_FOUND);
+		}
+
+		if (resourceId == 14) {
+			@SuppressWarnings("unchecked")
+			final Value<String> value = (Value<String>) node.getValue();
+			utcOffset = value.value;
+			return new LwM2mResponse(ResponseCode.CHANGED);
+		} else {
+			return new LwM2mResponse(ResponseCode.METHOD_NOT_ALLOWED);
 		}
 	}
 
