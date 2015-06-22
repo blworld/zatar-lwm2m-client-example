@@ -10,4 +10,6 @@ dependencies {
     compile ('org.eclipse.leshan:leshan-core:99.0.3-SNAPSHOT')
     compile ('org.eclipse.leshan:leshan-client-core:99.0.3-SNAPSHOT')
     compile ('org.eclipse.leshan:leshan-client-cf:99.0.3-SNAPSHOT')
+    
+    testCompile ('junit:junit:4.12')
 }
