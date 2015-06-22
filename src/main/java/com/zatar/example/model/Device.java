@@ -1,5 +1,8 @@
 package com.zatar.example.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.eclipse.leshan.ResponseCode;
 import org.eclipse.leshan.client.resource.BaseInstanceEnabler;
 import org.eclipse.leshan.core.node.LwM2mResource;
@@ -10,6 +13,13 @@ public class Device extends BaseInstanceEnabler {
 
 	private static final String MANUFACTURER = "Zatar Example Devices Inc.";
 	private static final String MODEL = "zatarex1";
+	private final Set<Integer> resources;
+
+	public Device() {
+		resources = new HashSet<>();
+		resources.add(0);
+		resources.add(1);
+	}
 
 	@Override
 	public ValueResponse read(final int resourceId) {
@@ -21,7 +31,7 @@ public class Device extends BaseInstanceEnabler {
 	}
 
 	private boolean resourceExists(final int resourceId) {
-		return resourceId == 0 || resourceId == 1;
+		return resources.contains(resourceId);
 	}
 
 	private String readStringValue(final int resourceId) {
