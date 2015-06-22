@@ -16,7 +16,6 @@ public class Device extends BaseInstanceEnabler {
 	private static final String MANUFACTURER = "Zatar Example Devices Inc.";
 	private static final String MODEL = "zatarex1";
 	private final Map<Integer, ResourceEnabler> resources;
-	private final String utcOffset;
 
 	public Device() {
 		resources = new HashMap<>();
@@ -24,8 +23,6 @@ public class Device extends BaseInstanceEnabler {
 		resources.put(1, new ResourceEnabler(1, MODEL));
 		resources.put(2, new ResourceEnabler(2, SERIAL_NUMBER));
 		resources.put(14, new ResourceEnabler(14, "+05"));
-
-		utcOffset = "+05";
 	}
 
 	@Override
