@@ -20,10 +20,10 @@ public class Device extends BaseInstanceEnabler {
 
 	public Device() {
 		resources = new HashMap<>();
-		resources.put(0, new ResourceEnabler());
-		resources.put(1, new ResourceEnabler());
-		resources.put(2, new ResourceEnabler());
-		resources.put(14, new ResourceEnabler());
+		resources.put(0, new ResourceEnabler(MANUFACTURER));
+		resources.put(1, new ResourceEnabler(MODEL));
+		resources.put(2, new ResourceEnabler(SERIAL_NUMBER));
+		resources.put(14, new ResourceEnabler("+05"));
 
 		utcOffset = "+05";
 	}
@@ -73,6 +73,9 @@ public class Device extends BaseInstanceEnabler {
 	}
 
 	private class ResourceEnabler {
+
+		public ResourceEnabler(final String value) {
+		}
 
 	}
 
