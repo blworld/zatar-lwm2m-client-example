@@ -15,8 +15,8 @@ public class Device extends BaseInstanceEnabler {
 	private static final String SERIAL_NUMBER = "ZE98765";
 	private static final String MANUFACTURER = "Zatar Example Devices Inc.";
 	private static final String MODEL = "zatarex1";
-	private static final String UTC_OFFSET = "+05";
 	private final Set<Integer> resources;
+	private String utcOffset;
 
 	public Device() {
 		resources = new HashSet<>();
@@ -24,6 +24,8 @@ public class Device extends BaseInstanceEnabler {
 		resources.add(1);
 		resources.add(2);
 		resources.add(14);
+
+		utcOffset = "+05";
 	}
 
 	@Override
@@ -39,6 +41,9 @@ public class Device extends BaseInstanceEnabler {
 	public LwM2mResponse write(final int resourceId, final LwM2mResource node) {
 		if (resourceExists(resourceId)) {
 			if (resourceId == 14) {
+				@SuppressWarnings("unchecked")
+				final Value<String> value = (Value<String>) node.getValue();
+				utcOffset = value.value;
 				return new LwM2mResponse(ResponseCode.CHANGED);
 			} else {
 				return new LwM2mResponse(ResponseCode.METHOD_NOT_ALLOWED);
@@ -61,7 +66,7 @@ public class Device extends BaseInstanceEnabler {
 			case 2:
 				return SERIAL_NUMBER;
 			case 14:
-				return UTC_OFFSET;
+				return utcOffset;
 			default:
 				return null;
 		}

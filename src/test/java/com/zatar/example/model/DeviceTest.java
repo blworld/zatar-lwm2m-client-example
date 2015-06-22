@@ -48,6 +48,7 @@ public class DeviceTest {
 	@Test
 	public void writeOnUtcOffsetChanged() {
 		assertChangedWrite(14, "-03");
+		assertContentRead(14, "-03");
 	}
 
 	@Test
