@@ -1,1 +1,13 @@
 apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven {url "http://localhost:1234/nexus/content/repositories/thirdparty-snapshot"}
+}
+
+dependencies {
+    compile ('org.eclipse.leshan:leshan-core:99.0.3-SNAPSHOT')
+    compile ('org.eclipse.leshan:leshan-client-core:99.0.3-SNAPSHOT')
+    compile ('org.eclipse.leshan:leshan-client-cf:99.0.3-SNAPSHOT')
+}
