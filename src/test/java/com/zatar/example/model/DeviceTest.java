@@ -46,6 +46,11 @@ public class DeviceTest {
 	}
 
 	@Test
+	public void writeOnUtcOffsetChanged() {
+		assertChangedWrite(14, "-03");
+	}
+
+	@Test
 	public void readOnMissingResourceNotFound() {
 		assertNotFoundRead(150);
 	}
@@ -67,6 +72,12 @@ public class DeviceTest {
 		final ValueResponse response = dev.read(resourceId);
 
 		assertEquals(ResponseCode.NOT_FOUND, response.getCode());
+	}
+
+	private void assertChangedWrite(final int resourceId, final String newValue) {
+		final LwM2mResponse response = dev.write(resourceId, new LwM2mResource(resourceId, Value.newStringValue(newValue)));
+
+		assertEquals(ResponseCode.CHANGED, response.getCode());
 	}
 
 	private void assertNotAllowedWrite(final int resourceId, final String newValue) {
