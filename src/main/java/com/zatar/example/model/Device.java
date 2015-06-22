@@ -13,11 +13,15 @@ public class Device extends BaseInstanceEnabler {
 
 	@Override
 	public ValueResponse read(final int resourceId) {
-		if (resourceId == 0 || resourceId == 1) {
+		if (resourceExists(resourceId)) {
 			return new ValueResponse(ResponseCode.CONTENT, new LwM2mResource(resourceId, Value.newStringValue(readStringValue(resourceId))));
 		} else {
 			return new ValueResponse(ResponseCode.NOT_FOUND);
 		}
+	}
+
+	private boolean resourceExists(final int resourceId) {
+		return resourceId == 0 || resourceId == 1;
 	}
 
 	private String readStringValue(final int resourceId) {
