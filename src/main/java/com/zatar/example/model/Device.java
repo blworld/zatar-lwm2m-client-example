@@ -40,7 +40,7 @@ public class Device extends BaseInstanceEnabler {
 		if (enabler == null) {
 			return new LwM2mResponse(ResponseCode.NOT_FOUND);
 		}
-		return new LwM2mResponse(ResponseCode.METHOD_NOT_ALLOWED);
+		return enabler.write(node);
 	}
 
 	private class ResourceEnabler {
@@ -55,6 +55,10 @@ public class Device extends BaseInstanceEnabler {
 
 		public ValueResponse read() {
 			return new ValueResponse(ResponseCode.CONTENT, new LwM2mResource(id, Value.newStringValue(value)));
+		}
+
+		public LwM2mResponse write(final LwM2mResource node) {
+			return new LwM2mResponse(ResponseCode.METHOD_NOT_ALLOWED);
 		}
 
 	}
