@@ -57,21 +57,6 @@ public class Device extends BaseInstanceEnabler {
 		return resources.containsKey(resourceId);
 	}
 
-	private String readStringValue(final int resourceId) {
-		switch(resourceId) {
-			case 0:
-				return MANUFACTURER;
-			case 1:
-				return MODEL;
-			case 2:
-				return SERIAL_NUMBER;
-			case 14:
-				return utcOffset;
-			default:
-				return null;
-		}
-	}
-
 	private class ResourceEnabler {
 
 		private final int id;
