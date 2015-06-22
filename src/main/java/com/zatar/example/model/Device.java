@@ -15,6 +15,7 @@ public class Device extends BaseInstanceEnabler {
 	private static final String SERIAL_NUMBER = "ZE98765";
 	private static final String MANUFACTURER = "Zatar Example Devices Inc.";
 	private static final String MODEL = "zatarex1";
+	private static final String UTC_OFFSET = "+05";
 	private final Set<Integer> resources;
 
 	public Device() {
@@ -22,6 +23,7 @@ public class Device extends BaseInstanceEnabler {
 		resources.add(0);
 		resources.add(1);
 		resources.add(2);
+		resources.add(14);
 	}
 
 	@Override
@@ -54,6 +56,8 @@ public class Device extends BaseInstanceEnabler {
 				return MODEL;
 			case 2:
 				return SERIAL_NUMBER;
+			case 14:
+				return UTC_OFFSET;
 			default:
 				return null;
 		}

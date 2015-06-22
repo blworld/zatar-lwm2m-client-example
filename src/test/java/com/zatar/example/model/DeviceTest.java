@@ -41,6 +41,11 @@ public class DeviceTest {
 	}
 
 	@Test
+	public void readOnUtcOffsetContent() {
+		assertContentRead(14, "+05");
+	}
+
+	@Test
 	public void readOnMissingResourceNotFound() {
 		assertNotFoundRead(150);
 	}
