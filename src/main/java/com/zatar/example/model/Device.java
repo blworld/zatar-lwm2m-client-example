@@ -31,11 +31,10 @@ public class Device extends BaseInstanceEnabler {
 	@Override
 	public ValueResponse read(final int resourceId) {
 		final ResourceEnabler enabler = resources.get(resourceId);
-		if (enabler != null) {
-			return new ValueResponse(ResponseCode.CONTENT, new LwM2mResource(resourceId, Value.newStringValue(readStringValue(resourceId))));
-		} else {
+		if (enabler == null) {
 			return new ValueResponse(ResponseCode.NOT_FOUND);
 		}
+		return new ValueResponse(ResponseCode.CONTENT, new LwM2mResource(resourceId, Value.newStringValue(readStringValue(resourceId))));
 	}
 
 	@Override
