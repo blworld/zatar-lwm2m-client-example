@@ -1,7 +1,7 @@
 package com.zatar.example.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.leshan.ResponseCode;
 import org.eclipse.leshan.client.resource.BaseInstanceEnabler;
@@ -15,15 +15,15 @@ public class Device extends BaseInstanceEnabler {
 	private static final String SERIAL_NUMBER = "ZE98765";
 	private static final String MANUFACTURER = "Zatar Example Devices Inc.";
 	private static final String MODEL = "zatarex1";
-	private final Set<Integer> resources;
+	private final Map<Integer, ResourceEnabler> resources;
 	private String utcOffset;
 
 	public Device() {
-		resources = new HashSet<>();
-		resources.add(0);
-		resources.add(1);
-		resources.add(2);
-		resources.add(14);
+		resources = new HashMap<>();
+		resources.put(0, new ResourceEnabler());
+		resources.put(1, new ResourceEnabler());
+		resources.put(2, new ResourceEnabler());
+		resources.put(14, new ResourceEnabler());
 
 		utcOffset = "+05";
 	}
@@ -54,7 +54,7 @@ public class Device extends BaseInstanceEnabler {
 	}
 
 	private boolean resourceExists(final int resourceId) {
-		return resources.contains(resourceId);
+		return resources.containsKey(resourceId);
 	}
 
 	private String readStringValue(final int resourceId) {
@@ -70,6 +70,10 @@ public class Device extends BaseInstanceEnabler {
 			default:
 				return null;
 		}
+	}
+
+	private class ResourceEnabler {
+
 	}
 
 }
