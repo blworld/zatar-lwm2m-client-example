@@ -29,12 +29,23 @@ public class DeviceTest {
 		assertCorrectResource(1, "zatarex1");
 	}
 
+	@Test
+	public void correctNotFoundResource() {
+		assertNotFoundResource(150);
+	}
+
 	private void assertCorrectResource(final int resourceId, final String value) {
 		final ValueResponse response = dev.read(resourceId);
 
 		assertEquals(ResponseCode.CONTENT, response.getCode());
 		assertEquals(new LwM2mResource(resourceId, Value.newStringValue(value)),
 				response.getContent());
+	}
+
+	private void assertNotFoundResource(final int resourceId) {
+		final ValueResponse response = dev.read(resourceId);
+
+		assertEquals(ResponseCode.NOT_FOUND, response.getCode());
 	}
 
 }
