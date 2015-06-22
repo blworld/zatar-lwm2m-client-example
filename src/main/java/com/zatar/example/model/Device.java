@@ -9,10 +9,18 @@ import org.eclipse.leshan.core.response.ValueResponse;
 public class Device extends BaseInstanceEnabler {
 
 	private static final String MANUFACTURER = "Zatar Example Devices Inc.";
+	private static final String MODEL = "zatarex1";
 
 	@Override
 	public ValueResponse read(final int resourceId) {
-		return new ValueResponse(ResponseCode.CONTENT, new LwM2mResource(0, Value.newStringValue(MANUFACTURER)));
+		switch(resourceId) {
+			case 0:
+				return new ValueResponse(ResponseCode.CONTENT, new LwM2mResource(0, Value.newStringValue(MANUFACTURER)));
+			case 1:
+				return new ValueResponse(ResponseCode.CONTENT, new LwM2mResource(1, Value.newStringValue(MODEL)));
+			default:
+				return null;
+		}
 	}
 
 }

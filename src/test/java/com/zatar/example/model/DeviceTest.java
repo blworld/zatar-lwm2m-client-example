@@ -22,4 +22,15 @@ public class DeviceTest {
 				response.getContent());
 	}
 
+	@Test
+	public void canReadModel() {
+		final LwM2mInstanceEnabler dev = new Device();
+
+		final ValueResponse response = dev.read(1);
+
+		assertEquals(ResponseCode.CONTENT, response.getCode());
+		assertEquals(new LwM2mResource(1, Value.newStringValue("zatarex1")),
+				response.getContent());
+	}
+
 }
