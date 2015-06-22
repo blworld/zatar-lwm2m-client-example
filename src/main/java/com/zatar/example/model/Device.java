@@ -15,9 +15,9 @@ public class Device extends BaseInstanceEnabler {
 	public ValueResponse read(final int resourceId) {
 		switch(resourceId) {
 			case 0:
-				return new ValueResponse(ResponseCode.CONTENT, new LwM2mResource(0, Value.newStringValue(MANUFACTURER)));
+				return new ValueResponse(ResponseCode.CONTENT, new LwM2mResource(resourceId, Value.newStringValue(MANUFACTURER)));
 			case 1:
-				return new ValueResponse(ResponseCode.CONTENT, new LwM2mResource(1, Value.newStringValue(MODEL)));
+				return new ValueResponse(ResponseCode.CONTENT, new LwM2mResource(resourceId, Value.newStringValue(MODEL)));
 			default:
 				return null;
 		}
