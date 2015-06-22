@@ -19,10 +19,10 @@ public class Device extends BaseInstanceEnabler {
 
 	public Device() {
 		resources = new HashMap<>();
-		resources.put(0, new ResourceEnabler(0, MANUFACTURER));
-		resources.put(1, new ResourceEnabler(1, MODEL));
-		resources.put(2, new ResourceEnabler(2, SERIAL_NUMBER));
-		resources.put(14, new ResourceEnabler(14, "+05"));
+		resources.put(0, new ReadOnlyResourceEnabler(0, MANUFACTURER));
+		resources.put(1, new ReadOnlyResourceEnabler(1, MODEL));
+		resources.put(2, new ReadOnlyResourceEnabler(2, SERIAL_NUMBER));
+		resources.put(14, new ReadOnlyResourceEnabler(14, "+05"));
 	}
 
 	@Override
@@ -43,20 +43,28 @@ public class Device extends BaseInstanceEnabler {
 		return enabler.write(node);
 	}
 
-	private class ResourceEnabler {
+	private interface ResourceEnabler {
 
+		ValueResponse read();
+		LwM2mResponse write(LwM2mResource node);
+
+	}
+
+	private class ReadOnlyResourceEnabler implements ResourceEnabler {
 		private final int id;
 		private final String value;
 
-		public ResourceEnabler(final int id, final String value) {
+		public ReadOnlyResourceEnabler(final int id, final String value) {
 			this.id = id;
 			this.value = value;
 		}
 
+		@Override
 		public ValueResponse read() {
 			return new ValueResponse(ResponseCode.CONTENT, new LwM2mResource(id, Value.newStringValue(value)));
 		}
 
+		@Override
 		public LwM2mResponse write(final LwM2mResource node) {
 			return new LwM2mResponse(ResponseCode.METHOD_NOT_ALLOWED);
 		}
