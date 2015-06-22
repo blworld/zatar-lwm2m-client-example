@@ -30,6 +30,11 @@ public class DeviceTest {
 	}
 
 	@Test
+	public void canReadSerialNumber() {
+		assertCorrectResource(2, "ZE98765");
+	}
+
+	@Test
 	public void correctNotFoundResource() {
 		assertNotFoundResource(150);
 	}
