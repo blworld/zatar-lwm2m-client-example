@@ -54,10 +54,6 @@ public class Device extends BaseInstanceEnabler {
 		}
 	}
 
-	private boolean resourceExists(final int resourceId) {
-		return resources.containsKey(resourceId);
-	}
-
 	private class ResourceEnabler {
 
 		private final int id;
