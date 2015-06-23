@@ -46,6 +46,11 @@ public class DeviceTest {
 		assertContentRead(2, "ZE98765");
 	}
 
+	@Test
+	public void writeOnRebootNotAllowed() {
+		assertNotAllowedWrite(4, "???");
+	}
+
 	@Ignore
 	@Test
 	public void executeOnRebootChanged() {
