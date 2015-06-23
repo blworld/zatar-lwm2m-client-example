@@ -16,6 +16,7 @@ public class DevToken extends BaseZatarInstanceEnabler {
 
 	private static Map<Integer, ResourceEnabler> createEnablers() {
 		final HashMap<Integer, ResourceEnabler> resources = new HashMap<>();
+		resources.put(0, new ReadOnlyResourceEnabler(0, "initial-dev-token"));
 		return resources;
 	}
 
