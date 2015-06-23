@@ -1,12 +1,5 @@
 package com.zatar.example.model;
 
-import static org.junit.Assert.assertEquals;
-
-import org.eclipse.leshan.ResponseCode;
-import org.eclipse.leshan.core.node.LwM2mResource;
-import org.eclipse.leshan.core.node.Value;
-import org.eclipse.leshan.core.response.LwM2mResponse;
-import org.eclipse.leshan.core.response.ValueResponse;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -81,62 +74,6 @@ public class DeviceTest extends BaseInstanceEnablerTest {
 	@Test
 	public void executeOnMissingResourceNotFound() {
 		assertNotFoundExecute(150, "Missing resource...");
-	}
-
-	private void assertContentRead(final int resourceId, final String value) {
-		final ValueResponse response = enabler.read(resourceId);
-
-		assertEquals(ResponseCode.CONTENT, response.getCode());
-		assertEquals(new LwM2mResource(resourceId, Value.newStringValue(value)),
-				response.getContent());
-	}
-
-	private void assertNotFoundRead(final int resourceId) {
-		final ValueResponse response = enabler.read(resourceId);
-
-		assertEquals(ResponseCode.NOT_FOUND, response.getCode());
-	}
-
-	private void assertNotAllowedRead(final int resourceId) {
-		final ValueResponse response = enabler.read(resourceId);
-
-		assertEquals(ResponseCode.METHOD_NOT_ALLOWED, response.getCode());
-	}
-
-	private void assertChangedWrite(final int resourceId, final String newValue) {
-		final LwM2mResponse response = enabler.write(resourceId, new LwM2mResource(resourceId, Value.newStringValue(newValue)));
-
-		assertEquals(ResponseCode.CHANGED, response.getCode());
-	}
-
-	private void assertNotAllowedWrite(final int resourceId, final String newValue) {
-		final LwM2mResponse response = enabler.write(resourceId, new LwM2mResource(resourceId, Value.newStringValue(newValue)));
-
-		assertEquals(ResponseCode.METHOD_NOT_ALLOWED, response.getCode());
-	}
-
-	private void assertNotFoundWrite(final int resourceId, final String newValue) {
-		final LwM2mResponse response = enabler.write(resourceId, new LwM2mResource(resourceId, Value.newStringValue(newValue)));
-
-		assertEquals(ResponseCode.NOT_FOUND, response.getCode());
-	}
-
-	private void assertChangedExecute(final int resourceId, final String params) {
-		final LwM2mResponse response = enabler.execute(resourceId, params.getBytes());
-
-		assertEquals(ResponseCode.CHANGED, response.getCode());
-	}
-
-	private void assertNotAllowedExecute(final int resourceId, final String params) {
-		final LwM2mResponse response = enabler.execute(resourceId, params.getBytes());
-
-		assertEquals(ResponseCode.METHOD_NOT_ALLOWED, response.getCode());
-	}
-
-	private void assertNotFoundExecute(final int resourceId, final String params) {
-		final LwM2mResponse response = enabler.execute(resourceId, params.getBytes());
-
-		assertEquals(ResponseCode.NOT_FOUND, response.getCode());
 	}
 
 }
