@@ -10,7 +10,10 @@ public class DevToken extends BaseInstanceEnabler {
 
 	@Override
 	public ValueResponse read(final int resourceId) {
-		return new ValueResponse(ResponseCode.CONTENT, new LwM2mResource(resourceId, Value.newStringValue("initial-dev-token")));
+		if (resourceId == 0) {
+			return new ValueResponse(ResponseCode.CONTENT, new LwM2mResource(resourceId, Value.newStringValue("initial-dev-token")));
+		}
+		return new ValueResponse(ResponseCode.NOT_FOUND);
 	}
 
 }

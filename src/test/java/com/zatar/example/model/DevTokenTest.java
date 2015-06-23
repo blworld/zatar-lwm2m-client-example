@@ -15,4 +15,9 @@ public class DevTokenTest extends BaseInstanceEnablerTest {
 		assertContentRead(0, "initial-dev-token");
 	}
 
+	@Test
+	public void readOnMissingResourceNotFound() {
+		assertNotFoundRead(150);
+	}
+
 }
