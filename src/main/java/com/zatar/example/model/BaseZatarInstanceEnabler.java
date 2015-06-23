@@ -15,6 +15,10 @@ public class BaseZatarInstanceEnabler extends BaseInstanceEnabler {
 	public BaseZatarInstanceEnabler() {
 	}
 
+	public BaseZatarInstanceEnabler(final Map<Integer, ResourceEnabler> resources) {
+		this.resources = resources;
+	}
+
 	@Override
 	public ValueResponse read(final int resourceId) {
 		final ResourceEnabler enabler = resources.get(resourceId);
