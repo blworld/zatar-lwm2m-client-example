@@ -11,7 +11,7 @@ import org.eclipse.leshan.core.response.ValueResponse;
 import org.junit.Before;
 import org.junit.Test;
 
-public class DeviceTest {
+public class DeviceTest extends BaseInstanceEnablerTest {
 
 	private LwM2mInstanceEnabler dev;
 
