@@ -1,17 +1,12 @@
 package com.zatar.example.model;
 
 import org.eclipse.leshan.client.resource.LwM2mInstanceEnabler;
-import org.junit.Before;
 import org.junit.Test;
 
 public class DeviceTest extends BaseInstanceEnablerTest {
 
-	@Before
-	public void setup() {
-		enabler = createEnabler();
-	}
-
-	private LwM2mInstanceEnabler createEnabler() {
+	@Override
+	protected LwM2mInstanceEnabler createEnabler() {
 		return new Device();
 	}
 

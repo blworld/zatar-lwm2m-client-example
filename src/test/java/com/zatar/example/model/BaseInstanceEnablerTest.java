@@ -8,10 +8,18 @@ import org.eclipse.leshan.core.node.LwM2mResource;
 import org.eclipse.leshan.core.node.Value;
 import org.eclipse.leshan.core.response.LwM2mResponse;
 import org.eclipse.leshan.core.response.ValueResponse;
+import org.junit.Before;
 
-public class BaseInstanceEnablerTest {
+public abstract class BaseInstanceEnablerTest {
 
 	protected LwM2mInstanceEnabler enabler;
+
+	@Before
+	public void setup() {
+		enabler = createEnabler();
+	}
+
+	protected abstract LwM2mInstanceEnabler createEnabler();
 
 	protected void assertContentRead(final int resourceId, final String value) {
 		final ValueResponse response = enabler.read(resourceId);
