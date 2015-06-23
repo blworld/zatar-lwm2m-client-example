@@ -9,6 +9,7 @@ import org.eclipse.leshan.core.node.Value;
 import org.eclipse.leshan.core.response.LwM2mResponse;
 import org.eclipse.leshan.core.response.ValueResponse;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class DeviceTest {
@@ -43,6 +44,12 @@ public class DeviceTest {
 	@Test
 	public void readOnSerialNumberContent() {
 		assertContentRead(2, "ZE98765");
+	}
+
+	@Ignore
+	@Test
+	public void executeOnRebootChanged() {
+		assertChangedExecute(4, "");
 	}
 
 	@Test
@@ -101,6 +108,12 @@ public class DeviceTest {
 		final LwM2mResponse response = dev.write(resourceId, new LwM2mResource(resourceId, Value.newStringValue(newValue)));
 
 		assertEquals(ResponseCode.NOT_FOUND, response.getCode());
+	}
+
+	private void assertChangedExecute(final int resourceId, final String params) {
+		final LwM2mResponse response = dev.execute(resourceId, params.getBytes());
+
+		assertEquals(ResponseCode.CHANGED, response.getCode());
 	}
 
 	private void assertNotAllowedExecute(final int resourceId, final String params) {
