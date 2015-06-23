@@ -16,8 +16,18 @@ public class DevTokenTest extends BaseInstanceEnablerTest {
 	}
 
 	@Test
+	public void writeOnTokenNotAllowed() {
+		assertNotAllowedWrite(0, "invalid-token");
+	}
+
+	@Test
 	public void readOnMissingResourceNotFound() {
 		assertNotFoundRead(150);
+	}
+
+	@Test
+	public void writeOnMissingResourceNotFound() {
+		assertNotFoundWrite(150, "missing-token");
 	}
 
 }
