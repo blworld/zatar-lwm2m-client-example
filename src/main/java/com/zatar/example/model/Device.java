@@ -44,27 +44,6 @@ public class Device extends BaseInstanceEnabler {
 		return enabler.write(node);
 	}
 
-	private class ReadOnlyResourceEnabler implements ResourceEnabler {
-		private final int id;
-		private final String value;
-
-		public ReadOnlyResourceEnabler(final int id, final String value) {
-			this.id = id;
-			this.value = value;
-		}
-
-		@Override
-		public ValueResponse read() {
-			return new ValueResponse(ResponseCode.CONTENT, new LwM2mResource(id, Value.newStringValue(value)));
-		}
-
-		@Override
-		public LwM2mResponse write(final LwM2mResource node) {
-			return new LwM2mResponse(ResponseCode.METHOD_NOT_ALLOWED);
-		}
-
-	}
-
 	private class ReadWriteResourceEnabler implements ResourceEnabler {
 		private final int id;
 		private String value;
