@@ -10,7 +10,7 @@ import org.eclipse.leshan.core.response.ValueResponse;
 
 public class BaseZatarInstanceEnabler extends BaseInstanceEnabler {
 
-	protected Map<Integer, ResourceEnabler> resources;
+	private final Map<Integer, ResourceEnabler> resources;
 
 	public BaseZatarInstanceEnabler(final Map<Integer, ResourceEnabler> resources) {
 		this.resources = resources;
