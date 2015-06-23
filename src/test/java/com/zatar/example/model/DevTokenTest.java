@@ -21,6 +21,11 @@ public class DevTokenTest extends BaseInstanceEnablerTest {
 	}
 
 	@Test
+	public void readOnValidatorNotAllowed() {
+		assertNotAllowedRead(3);
+	}
+
+	@Test
 	public void readOnMissingResourceNotFound() {
 		assertNotFoundRead(150);
 	}
