@@ -15,4 +15,9 @@ public class DevTokenTest extends BaseInstanceEnablerTest {
 		final LwM2mInstanceEnabler devToken = new DevToken();
 	}
 
+	@Test
+	public void readOnTokenContent() {
+		assertContentRead(0, "initial-dev-token");
+	}
+
 }
