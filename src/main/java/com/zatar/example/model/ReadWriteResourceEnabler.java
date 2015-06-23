@@ -6,7 +6,7 @@ import org.eclipse.leshan.core.node.Value;
 import org.eclipse.leshan.core.response.LwM2mResponse;
 import org.eclipse.leshan.core.response.ValueResponse;
 
-public class ReadWriteResourceEnabler implements ResourceEnabler {
+public class ReadWriteResourceEnabler extends BaseResourceEnabler {
 	private final int id;
 	private String value;
 
