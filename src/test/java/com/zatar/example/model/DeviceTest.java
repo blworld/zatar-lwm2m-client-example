@@ -7,7 +7,11 @@ public class DeviceTest extends BaseInstanceEnablerTest {
 
 	@Before
 	public void setup() {
-		enabler = new Device();
+		enabler = createEnabler();
+	}
+
+	private Device createEnabler() {
+		return new Device();
 	}
 
 	@Test
