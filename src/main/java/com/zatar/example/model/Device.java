@@ -11,7 +11,7 @@ public class Device extends BaseZatarInstanceEnabler {
 	private static final String INITIAL_UTC_OFFSET = "+05";
 
 	public Device() {
-		this.resources = createResourceEnablers();
+		super(createResourceEnablers());
 	}
 
 	private static Map<Integer, ResourceEnabler> createResourceEnablers() {
