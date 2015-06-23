@@ -8,5 +8,6 @@ public interface ResourceEnabler {
 
 	ValueResponse read();
 	LwM2mResponse write(LwM2mResource node);
+	LwM2mResponse execute(byte[] params);
 
 }

@@ -17,4 +17,9 @@ public abstract class BaseResourceEnabler implements ResourceEnabler {
 		return new LwM2mResponse(ResponseCode.METHOD_NOT_ALLOWED);
 	}
 
+	@Override
+	public LwM2mResponse execute(final byte[] params) {
+		return new LwM2mResponse(ResponseCode.METHOD_NOT_ALLOWED);
+	}
+
 }
