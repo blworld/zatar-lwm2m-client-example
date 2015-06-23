@@ -26,6 +26,11 @@ public class DevTokenTest extends BaseInstanceEnablerTest {
 	}
 
 	@Test
+	public void writeOnValidatorChanged() {
+		assertChangedWrite(3, "1");
+	}
+
+	@Test
 	public void readOnMissingResourceNotFound() {
 		assertNotFoundRead(150);
 	}
