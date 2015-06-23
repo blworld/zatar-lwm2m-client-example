@@ -3,7 +3,6 @@ package com.zatar.example.model;
 import static org.junit.Assert.assertEquals;
 
 import org.eclipse.leshan.ResponseCode;
-import org.eclipse.leshan.client.resource.LwM2mInstanceEnabler;
 import org.eclipse.leshan.core.node.LwM2mResource;
 import org.eclipse.leshan.core.node.Value;
 import org.eclipse.leshan.core.response.LwM2mResponse;
@@ -12,8 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class DeviceTest extends BaseInstanceEnablerTest {
-
-	private LwM2mInstanceEnabler enabler;
 
 	@Before
 	public void setup() {
