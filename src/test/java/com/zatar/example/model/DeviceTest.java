@@ -47,6 +47,11 @@ public class DeviceTest {
 	}
 
 	@Test
+	public void readOnRebootNotAllowed() {
+		assertNotAllowedRead(4);
+	}
+
+	@Test
 	public void writeOnRebootNotAllowed() {
 		assertNotAllowedWrite(4, "???");
 	}
@@ -95,6 +100,12 @@ public class DeviceTest {
 		final ValueResponse response = dev.read(resourceId);
 
 		assertEquals(ResponseCode.NOT_FOUND, response.getCode());
+	}
+
+	private void assertNotAllowedRead(final int resourceId) {
+		final ValueResponse response = dev.read(resourceId);
+
+		assertEquals(ResponseCode.METHOD_NOT_ALLOWED, response.getCode());
 	}
 
 	private void assertChangedWrite(final int resourceId, final String newValue) {
