@@ -12,7 +12,7 @@ import org.junit.Before;
 
 public abstract class BaseInstanceEnablerTest {
 
-	protected LwM2mInstanceEnabler enabler;
+	private LwM2mInstanceEnabler enabler;
 
 	@Before
 	public void setup() {
