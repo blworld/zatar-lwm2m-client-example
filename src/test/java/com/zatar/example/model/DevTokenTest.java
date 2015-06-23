@@ -3,7 +3,12 @@ package com.zatar.example.model;
 import org.eclipse.leshan.client.resource.LwM2mInstanceEnabler;
 import org.junit.Test;
 
-public class DevTokenTest {
+public class DevTokenTest extends BaseInstanceEnablerTest {
+
+	@Override
+	protected LwM2mInstanceEnabler createEnabler() {
+		return new DevToken();
+	}
 
 	@Test
 	public void canCreate() {
