@@ -43,4 +43,9 @@ public class Device extends BaseInstanceEnabler {
 		return enabler.write(node);
 	}
 
+	@Override
+	public LwM2mResponse execute(final int resourceId, final byte[] params) {
+		return new LwM2mResponse(ResponseCode.METHOD_NOT_ALLOWED);
+	}
+
 }

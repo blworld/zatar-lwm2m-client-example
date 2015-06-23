@@ -31,6 +31,11 @@ public class DeviceTest {
 	}
 
 	@Test
+	public void executeOnManufacturerNotAllowed() {
+		assertNotAllowedExecute(0, "Payload!");
+	}
+
+	@Test
 	public void readOnModelContent() {
 		assertContentRead(1, "zatarex1");
 	}
@@ -91,6 +96,12 @@ public class DeviceTest {
 		final LwM2mResponse response = dev.write(resourceId, new LwM2mResource(resourceId, Value.newStringValue(newValue)));
 
 		assertEquals(ResponseCode.NOT_FOUND, response.getCode());
+	}
+
+	private void assertNotAllowedExecute(final int resourceId, final String params) {
+		final LwM2mResponse response = dev.execute(resourceId, params.getBytes());
+
+		assertEquals(ResponseCode.METHOD_NOT_ALLOWED, response.getCode());
 	}
 
 }
