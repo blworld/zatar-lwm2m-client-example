@@ -45,6 +45,9 @@ public class Device extends BaseInstanceEnabler {
 
 	@Override
 	public LwM2mResponse execute(final int resourceId, final byte[] params) {
+		if (resources.get(resourceId) == null) {
+			return new LwM2mResponse(ResponseCode.NOT_FOUND);
+		}
 		return new LwM2mResponse(ResponseCode.METHOD_NOT_ALLOWED);
 	}
 

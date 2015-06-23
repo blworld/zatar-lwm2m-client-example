@@ -66,6 +66,11 @@ public class DeviceTest {
 		assertNotFoundWrite(150, "Whatever you are...");
 	}
 
+	@Test
+	public void executeOnMissingResourceNotFound() {
+		assertNotFoundExecute(150, "Missing resource...");
+	}
+
 	private void assertContentRead(final int resourceId, final String value) {
 		final ValueResponse response = dev.read(resourceId);
 
@@ -102,6 +107,12 @@ public class DeviceTest {
 		final LwM2mResponse response = dev.execute(resourceId, params.getBytes());
 
 		assertEquals(ResponseCode.METHOD_NOT_ALLOWED, response.getCode());
+	}
+
+	private void assertNotFoundExecute(final int resourceId, final String params) {
+		final LwM2mResponse response = dev.execute(resourceId, params.getBytes());
+
+		assertEquals(ResponseCode.NOT_FOUND, response.getCode());
 	}
 
 }
