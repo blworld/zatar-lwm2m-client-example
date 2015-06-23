@@ -12,9 +12,6 @@ public class BaseZatarInstanceEnabler extends BaseInstanceEnabler {
 
 	protected Map<Integer, ResourceEnabler> resources;
 
-	public BaseZatarInstanceEnabler() {
-	}
-
 	public BaseZatarInstanceEnabler(final Map<Integer, ResourceEnabler> resources) {
 		this.resources = resources;
 	}
