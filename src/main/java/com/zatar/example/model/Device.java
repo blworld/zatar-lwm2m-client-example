@@ -4,12 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.leshan.ResponseCode;
-import org.eclipse.leshan.client.resource.BaseInstanceEnabler;
 import org.eclipse.leshan.core.node.LwM2mResource;
 import org.eclipse.leshan.core.response.LwM2mResponse;
 import org.eclipse.leshan.core.response.ValueResponse;
 
-public class Device extends BaseInstanceEnabler {
+public class Device extends BaseZatarInstanceEnabler {
 
 	private static final String MANUFACTURER = "Zatar Example Devices Inc.";
 	private static final String MODEL = "zatarex1";
