@@ -14,7 +14,7 @@ public class Device extends BaseZatarInstanceEnabler {
 		this.resources = createResourceEnablers();
 	}
 
-	private Map<Integer, ResourceEnabler> createResourceEnablers() {
+	private static Map<Integer, ResourceEnabler> createResourceEnablers() {
 		final Map<Integer, ResourceEnabler> resources = new HashMap<>();
 		resources.put(0, new ReadOnlyResourceEnabler(0, MANUFACTURER));
 		resources.put(1, new ReadOnlyResourceEnabler(1, MODEL));
