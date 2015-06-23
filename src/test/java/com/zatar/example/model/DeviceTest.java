@@ -1,5 +1,6 @@
 package com.zatar.example.model;
 
+import org.eclipse.leshan.client.resource.LwM2mInstanceEnabler;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,7 +11,7 @@ public class DeviceTest extends BaseInstanceEnablerTest {
 		enabler = createEnabler();
 	}
 
-	private Device createEnabler() {
+	private LwM2mInstanceEnabler createEnabler() {
 		return new Device();
 	}
 
