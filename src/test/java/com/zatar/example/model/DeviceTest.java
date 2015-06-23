@@ -13,11 +13,11 @@ import org.junit.Test;
 
 public class DeviceTest extends BaseInstanceEnablerTest {
 
-	private LwM2mInstanceEnabler dev;
+	private LwM2mInstanceEnabler enabler;
 
 	@Before
 	public void setup() {
-		dev = new Device();
+		enabler = new Device();
 	}
 
 	@Test
@@ -87,7 +87,7 @@ public class DeviceTest extends BaseInstanceEnablerTest {
 	}
 
 	private void assertContentRead(final int resourceId, final String value) {
-		final ValueResponse response = dev.read(resourceId);
+		final ValueResponse response = enabler.read(resourceId);
 
 		assertEquals(ResponseCode.CONTENT, response.getCode());
 		assertEquals(new LwM2mResource(resourceId, Value.newStringValue(value)),
@@ -95,49 +95,49 @@ public class DeviceTest extends BaseInstanceEnablerTest {
 	}
 
 	private void assertNotFoundRead(final int resourceId) {
-		final ValueResponse response = dev.read(resourceId);
+		final ValueResponse response = enabler.read(resourceId);
 
 		assertEquals(ResponseCode.NOT_FOUND, response.getCode());
 	}
 
 	private void assertNotAllowedRead(final int resourceId) {
-		final ValueResponse response = dev.read(resourceId);
+		final ValueResponse response = enabler.read(resourceId);
 
 		assertEquals(ResponseCode.METHOD_NOT_ALLOWED, response.getCode());
 	}
 
 	private void assertChangedWrite(final int resourceId, final String newValue) {
-		final LwM2mResponse response = dev.write(resourceId, new LwM2mResource(resourceId, Value.newStringValue(newValue)));
+		final LwM2mResponse response = enabler.write(resourceId, new LwM2mResource(resourceId, Value.newStringValue(newValue)));
 
 		assertEquals(ResponseCode.CHANGED, response.getCode());
 	}
 
 	private void assertNotAllowedWrite(final int resourceId, final String newValue) {
-		final LwM2mResponse response = dev.write(resourceId, new LwM2mResource(resourceId, Value.newStringValue(newValue)));
+		final LwM2mResponse response = enabler.write(resourceId, new LwM2mResource(resourceId, Value.newStringValue(newValue)));
 
 		assertEquals(ResponseCode.METHOD_NOT_ALLOWED, response.getCode());
 	}
 
 	private void assertNotFoundWrite(final int resourceId, final String newValue) {
-		final LwM2mResponse response = dev.write(resourceId, new LwM2mResource(resourceId, Value.newStringValue(newValue)));
+		final LwM2mResponse response = enabler.write(resourceId, new LwM2mResource(resourceId, Value.newStringValue(newValue)));
 
 		assertEquals(ResponseCode.NOT_FOUND, response.getCode());
 	}
 
 	private void assertChangedExecute(final int resourceId, final String params) {
-		final LwM2mResponse response = dev.execute(resourceId, params.getBytes());
+		final LwM2mResponse response = enabler.execute(resourceId, params.getBytes());
 
 		assertEquals(ResponseCode.CHANGED, response.getCode());
 	}
 
 	private void assertNotAllowedExecute(final int resourceId, final String params) {
-		final LwM2mResponse response = dev.execute(resourceId, params.getBytes());
+		final LwM2mResponse response = enabler.execute(resourceId, params.getBytes());
 
 		assertEquals(ResponseCode.METHOD_NOT_ALLOWED, response.getCode());
 	}
 
 	private void assertNotFoundExecute(final int resourceId, final String params) {
-		final LwM2mResponse response = dev.execute(resourceId, params.getBytes());
+		final LwM2mResponse response = enabler.execute(resourceId, params.getBytes());
 
 		assertEquals(ResponseCode.NOT_FOUND, response.getCode());
 	}
