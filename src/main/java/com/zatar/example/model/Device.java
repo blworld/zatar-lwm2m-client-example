@@ -1,7 +1,6 @@
 package com.zatar.example.model;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import org.eclipse.leshan.ResponseCode;
 import org.eclipse.leshan.core.node.LwM2mResource;
@@ -14,7 +13,6 @@ public class Device extends BaseZatarInstanceEnabler {
 	private static final String MODEL = "zatarex1";
 	private static final String SERIAL_NUMBER = "ZE98765";
 	private static final String INITIAL_UTC_OFFSET = "+05";
-	private final Map<Integer, ResourceEnabler> resources;
 
 	public Device() {
 		resources = new HashMap<>();
