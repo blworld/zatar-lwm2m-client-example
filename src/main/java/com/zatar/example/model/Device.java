@@ -44,13 +44,6 @@ public class Device extends BaseInstanceEnabler {
 		return enabler.write(node);
 	}
 
-	private interface ResourceEnabler {
-
-		ValueResponse read();
-		LwM2mResponse write(LwM2mResource node);
-
-	}
-
 	private class ReadOnlyResourceEnabler implements ResourceEnabler {
 		private final int id;
 		private final String value;
