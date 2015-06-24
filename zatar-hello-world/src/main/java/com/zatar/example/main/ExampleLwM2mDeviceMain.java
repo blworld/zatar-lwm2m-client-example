@@ -5,13 +5,12 @@ import java.util.UUID;
 
 import org.eclipse.leshan.client.LwM2mClient;
 import org.eclipse.leshan.client.californium.LeshanClientBuilder;
+import org.eclipse.leshan.client.resource.BaseInstanceEnabler;
 import org.eclipse.leshan.client.resource.ObjectsInitializer;
 import org.eclipse.leshan.core.request.BindingMode;
 import org.eclipse.leshan.core.request.DeregisterRequest;
 import org.eclipse.leshan.core.request.RegisterRequest;
 import org.eclipse.leshan.core.response.RegisterResponse;
-
-import com.zatar.example.model.Device;
 
 public class ExampleLwM2mDeviceMain {
 
@@ -43,6 +42,10 @@ public class ExampleLwM2mDeviceMain {
 			}
 
 		});
+	}
+
+	private static class Device extends BaseInstanceEnabler {
+
 	}
 
 }
