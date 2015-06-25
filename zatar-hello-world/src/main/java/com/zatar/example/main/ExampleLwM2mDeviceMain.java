@@ -30,6 +30,11 @@ public class ExampleLwM2mDeviceMain {
 	private static final String ZATAR_HOSTNAME = "lwm2m";
 	private static final int ZATAR_PORT = 5683;
 
+	private static final String EXAMPLE_MANUFACTURER = "Zatar Example Devices, Inc";
+	private static final String EXAMPLE_MODEL = "zatarhelloworld1";
+	private static final String EXAMPLE_SERIAL_NUMBER = "ZHW12345";
+	private static final String TOKEN = "example-token-THIS-NEEDS-TO-BE-REPLACED";
+
 	public static void main(final String[] args) {
 		final Map<Integer, ObjectModel> objectModels = new HashMap<>();
 		objectModels.put(3, createDeviceObjectModel());
@@ -82,9 +87,6 @@ public class ExampleLwM2mDeviceMain {
 
 	public static class Device extends BaseInstanceEnabler {
 
-		private static final String EXAMPLE_MANUFACTURER = "Zatar Example Devices, Inc";
-		private static final String EXAMPLE_MODEL = "zatarhelloworld1";
-		private static final String EXAMPLE_SERIAL_NUMBER = "ZHW12345";
 
 		@Override
 		public ValueResponse read(final int resourceId) {
@@ -106,8 +108,6 @@ public class ExampleLwM2mDeviceMain {
 	}
 
 	public static class DevToken extends BaseInstanceEnabler {
-
-		private static final String TOKEN = "example-token-THIS-NEEDS-TO-BE-REPLACED";
 
 		@Override
 		public ValueResponse read(final int resourceId) {
