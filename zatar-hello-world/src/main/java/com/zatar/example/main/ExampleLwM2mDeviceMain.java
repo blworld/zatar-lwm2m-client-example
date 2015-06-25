@@ -30,13 +30,13 @@ import org.eclipse.leshan.core.response.ValueResponse;
 
 public class ExampleLwM2mDeviceMain {
 
-	private static String ZATAR_HOSTNAME = "lwm2m";
-	private static int ZATAR_PORT = 5683;
+	private static String zatarHostname = "lwm2m";
+	private static int zatarPort = 5683;
 
-	private static String EXAMPLE_MANUFACTURER = "Zatar Example Devices, Inc";
-	private static String EXAMPLE_MODEL = "zatarhelloworld1";
-	private static String EXAMPLE_SERIAL_NUMBER = "ZHW12345";
-	private static String TOKEN = "example-token-THIS-NEEDS-TO-BE-REPLACED";
+	private static String deviceManufacturer = "Zatar Example Devices, Inc";
+	private static String deviceModel = "zatarhelloworld1";
+	private static String deviceSerialNumber = "ZHW12345";
+	private static String deviceToken = "example-token-THIS-NEEDS-TO-BE-REPLACED";
 
 	public static void main(final String[] args) {
 		if (args.length != 1) {
@@ -47,12 +47,12 @@ public class ExampleLwM2mDeviceMain {
 		try {
 			final Properties props = new Properties();
 			props.load(new FileInputStream(args[0]));
-			ZATAR_HOSTNAME = props.getProperty("zatar.hostname");
-			ZATAR_PORT = Integer.parseInt(props.getProperty("zatar.port"));
-			EXAMPLE_MANUFACTURER = props.getProperty("device.manufacturer");
-			EXAMPLE_MODEL = props.getProperty("device.model");
-			EXAMPLE_SERIAL_NUMBER = props.getProperty("device.serial.number");
-			TOKEN = props.getProperty("device.token");
+			zatarHostname = props.getProperty("zatar.hostname");
+			zatarPort = Integer.parseInt(props.getProperty("zatar.port"));
+			deviceManufacturer = props.getProperty("device.manufacturer");
+			deviceModel = props.getProperty("device.model");
+			deviceSerialNumber = props.getProperty("device.serial.number");
+			deviceToken = props.getProperty("device.token");
 		} catch (final IOException e) {
 			System.err.println("Could not read file " + args[0] + ". Aborting.");
 		}
@@ -66,7 +66,7 @@ public class ExampleLwM2mDeviceMain {
 
 		final LwM2mClient client = new LeshanClientBuilder().
 				setBindingMode(BindingMode.T).
-				setServerAddress(new InetSocketAddress(ZATAR_HOSTNAME, ZATAR_PORT)).
+				setServerAddress(new InetSocketAddress(zatarHostname, zatarPort)).
 				setObjectsInitializer(initializer).
 				build(3, 23854);
 
@@ -114,13 +114,13 @@ public class ExampleLwM2mDeviceMain {
 			switch (resourceId) {
 				case 0:
 					return new ValueResponse(ResponseCode.CONTENT,
-							new LwM2mResource(0, Value.newStringValue(EXAMPLE_MANUFACTURER)));
+							new LwM2mResource(0, Value.newStringValue(deviceManufacturer)));
 				case 1:
 					return new ValueResponse(ResponseCode.CONTENT,
-							new LwM2mResource(1, Value.newStringValue(EXAMPLE_MODEL)));
+							new LwM2mResource(1, Value.newStringValue(deviceModel)));
 				case 2:
 					return new ValueResponse(ResponseCode.CONTENT,
-							new LwM2mResource(2, Value.newStringValue(EXAMPLE_SERIAL_NUMBER)));
+							new LwM2mResource(2, Value.newStringValue(deviceSerialNumber)));
 				default:
 					return new ValueResponse(ResponseCode.NOT_FOUND);
 			}
@@ -135,7 +135,7 @@ public class ExampleLwM2mDeviceMain {
 			switch (resourceId) {
 				case 0:
 					return new ValueResponse(ResponseCode.CONTENT,
-							new LwM2mResource(0, Value.newStringValue(TOKEN)));
+							new LwM2mResource(0, Value.newStringValue(deviceToken)));
 				case 1:
 					return new ValueResponse(ResponseCode.METHOD_NOT_ALLOWED);
 				default:
