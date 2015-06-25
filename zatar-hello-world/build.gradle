@@ -1,4 +1,16 @@
 apply plugin: 'java'
+apply plugin: 'gradle-one-jar'
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {url "http://localhost:1234/nexus/content/repositories/thirdparty-snapshot"}
+    }
+
+    dependencies {
+        classpath 'com.github.rholder:gradle-one-jar:1.0.4'
+    }
+}
 
 repositories {
     mavenCentral()
@@ -10,4 +22,8 @@ dependencies {
     compile ('org.eclipse.leshan:leshan-core:99.0.3-SNAPSHOT')
     compile ('org.eclipse.leshan:leshan-client-core:99.0.3-SNAPSHOT')
     compile ('org.eclipse.leshan:leshan-client-cf:99.0.3-SNAPSHOT')
+}
+
+task buildHelloWorld(type: OneJar) {
+    mainClass = 'com.zatar.example.main.ExampleLwM2mDeviceMain'
 }
