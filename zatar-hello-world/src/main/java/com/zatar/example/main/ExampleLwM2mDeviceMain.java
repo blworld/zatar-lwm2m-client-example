@@ -35,7 +35,6 @@ public class ExampleLwM2mDeviceMain {
 		objectModels.put(3, createDeviceObjectModel());
 		objectModels.put(23854, createDevTokenObjectModel());
 		final ObjectsInitializer initializer = new ObjectsInitializer(new LwM2mModel(objectModels));
-
 		initializer.setClassForObject(3, Device.class);
 		initializer.setClassForObject(23854, DevToken.class);
 
