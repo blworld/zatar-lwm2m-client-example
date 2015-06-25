@@ -27,6 +27,9 @@ import org.eclipse.leshan.core.response.ValueResponse;
 
 public class ExampleLwM2mDeviceMain {
 
+	private static final String ZATAR_HOSTNAME = "lwm2m";
+	private static final int ZATAR_PORT = 5683;
+
 	public static void main(final String[] args) {
 		final Map<Integer, ObjectModel> objectModels = new HashMap<>();
 		objectModels.put(3, createDeviceObjectModel());
@@ -38,7 +41,7 @@ public class ExampleLwM2mDeviceMain {
 
 		final LwM2mClient client = new LeshanClientBuilder().
 				setBindingMode(BindingMode.T).
-				setServerAddress(new InetSocketAddress("lwm2m", 5683)).
+				setServerAddress(new InetSocketAddress(ZATAR_HOSTNAME, ZATAR_PORT)).
 				setObjectsInitializer(initializer).
 				build(3, 23854);
 
@@ -80,18 +83,22 @@ public class ExampleLwM2mDeviceMain {
 
 	public static class Device extends BaseInstanceEnabler {
 
+		private static final String EXAMPLE_MANUFACTURER = "Zatar Example Devices, Inc";
+		private static final String EXAMPLE_MODEL = "zatarhelloworld1";
+		private static final String EXAMPLE_SERIAL_NUMBER = "ZHW12345";
+
 		@Override
 		public ValueResponse read(final int resourceId) {
 			switch (resourceId) {
 				case 0:
 					return new ValueResponse(ResponseCode.CONTENT,
-							new LwM2mResource(0, Value.newStringValue("Zatar Example Devices, Inc")));
+							new LwM2mResource(0, Value.newStringValue(EXAMPLE_MANUFACTURER)));
 				case 1:
 					return new ValueResponse(ResponseCode.CONTENT,
-							new LwM2mResource(1, Value.newStringValue("zatarhelloworld1")));
+							new LwM2mResource(1, Value.newStringValue(EXAMPLE_MODEL)));
 				case 2:
 					return new ValueResponse(ResponseCode.CONTENT,
-							new LwM2mResource(2, Value.newStringValue("ZHW12345")));
+							new LwM2mResource(2, Value.newStringValue(EXAMPLE_SERIAL_NUMBER)));
 				default:
 					return new ValueResponse(ResponseCode.NOT_FOUND);
 			}
@@ -101,12 +108,14 @@ public class ExampleLwM2mDeviceMain {
 
 	public static class DevToken extends BaseInstanceEnabler {
 
+		private static final String TOKEN = "example-token-THIS-NEEDS-TO-BE-REPLACED";
+
 		@Override
 		public ValueResponse read(final int resourceId) {
 			switch (resourceId) {
 				case 0:
 					return new ValueResponse(ResponseCode.CONTENT,
-							new LwM2mResource(0, Value.newStringValue("example-token-THIS-NEEDS-TO-BE-REPLACED")));
+							new LwM2mResource(0, Value.newStringValue(TOKEN)));
 				case 1:
 					return new ValueResponse(ResponseCode.METHOD_NOT_ALLOWED);
 				default:
