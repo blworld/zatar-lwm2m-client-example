@@ -119,9 +119,11 @@ public class ExampleLwM2mDeviceMain {
 			switch (resourceId) {
 				case 0:
 					return new LwM2mResponse(ResponseCode.METHOD_NOT_ALLOWED);
-				case 1:
+				case 3:
 					if (resource.getValue().type == DataType.INTEGER) {
-						final int validated = (int) resource.getValue().value;
+						@SuppressWarnings("unchecked")
+						final Value<Integer> value = (Value<Integer>) resource.getValue();
+						final int validated = value.value;
 						if (validated == 1) {
 							System.out.println("Device Token was accepted");
 							return new LwM2mResponse(ResponseCode.CHANGED);
