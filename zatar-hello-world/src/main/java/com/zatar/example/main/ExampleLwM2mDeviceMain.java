@@ -30,13 +30,13 @@ import org.eclipse.leshan.core.response.ValueResponse;
 
 public class ExampleLwM2mDeviceMain {
 
-	private static String zatarHostname = "lwm2m";
-	private static int zatarPort = 5683;
+	private static String zatarHostname;
+	private static int zatarPort;
 
-	private static String deviceManufacturer = "Zatar Example Devices, Inc";
-	private static String deviceModel = "zatarhelloworld1";
-	private static String deviceSerialNumber = "ZHW12345";
-	private static String deviceToken = "example-token-THIS-NEEDS-TO-BE-REPLACED";
+	private static String deviceManufacturer;
+	private static String deviceModel;
+	private static String deviceSerialNumber;
+	private static String deviceToken;
 
 	public static void main(final String[] args) {
 		if (args.length != 1) {
