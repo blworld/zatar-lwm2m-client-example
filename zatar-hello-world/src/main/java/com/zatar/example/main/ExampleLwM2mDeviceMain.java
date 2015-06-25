@@ -1,8 +1,11 @@
 package com.zatar.example.main;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.UUID;
 
 import org.eclipse.leshan.ResponseCode;
@@ -27,15 +30,33 @@ import org.eclipse.leshan.core.response.ValueResponse;
 
 public class ExampleLwM2mDeviceMain {
 
-	private static final String ZATAR_HOSTNAME = "lwm2m";
-	private static final int ZATAR_PORT = 5683;
+	private static String ZATAR_HOSTNAME = "lwm2m";
+	private static int ZATAR_PORT = 5683;
 
-	private static final String EXAMPLE_MANUFACTURER = "Zatar Example Devices, Inc";
-	private static final String EXAMPLE_MODEL = "zatarhelloworld1";
-	private static final String EXAMPLE_SERIAL_NUMBER = "ZHW12345";
-	private static final String TOKEN = "example-token-THIS-NEEDS-TO-BE-REPLACED";
+	private static String EXAMPLE_MANUFACTURER = "Zatar Example Devices, Inc";
+	private static String EXAMPLE_MODEL = "zatarhelloworld1";
+	private static String EXAMPLE_SERIAL_NUMBER = "ZHW12345";
+	private static String TOKEN = "example-token-THIS-NEEDS-TO-BE-REPLACED";
 
 	public static void main(final String[] args) {
+		if (args.length != 1) {
+			System.err.println("Usage: java -jar <jar> <properties-file>");
+			System.exit(1);
+		}
+
+		try {
+			final Properties props = new Properties();
+			props.load(new FileInputStream(args[0]));
+			ZATAR_HOSTNAME = props.getProperty("zatar.hostname");
+			ZATAR_PORT = Integer.parseInt(props.getProperty("zatar.port"));
+			EXAMPLE_MANUFACTURER = props.getProperty("device.manufacturer");
+			EXAMPLE_MODEL = props.getProperty("device.model");
+			EXAMPLE_SERIAL_NUMBER = props.getProperty("device.serial.number");
+			TOKEN = props.getProperty("device.token");
+		} catch (final IOException e) {
+			System.err.println("Could not read file " + args[0] + ". Aborting.");
+		}
+
 		final Map<Integer, ObjectModel> objectModels = new HashMap<>();
 		objectModels.put(3, createDeviceObjectModel());
 		objectModels.put(23854, createDevTokenObjectModel());
