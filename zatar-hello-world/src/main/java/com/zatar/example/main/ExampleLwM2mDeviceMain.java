@@ -31,7 +31,7 @@ import org.eclipse.leshan.core.response.ValueResponse;
 public class ExampleLwM2mDeviceMain {
 
 	private static String zatarHostname;
-	private static int zatarPort;
+	private static Integer zatarPort;
 
 	private static String deviceManufacturer;
 	private static String deviceModel;
@@ -53,8 +53,22 @@ public class ExampleLwM2mDeviceMain {
 			deviceModel = props.getProperty("device.model");
 			deviceSerialNumber = props.getProperty("device.serial.number");
 			deviceToken = props.getProperty("device.token");
+
+			if (zatarHostname == null ||
+					zatarPort == null ||
+					deviceManufacturer == null ||
+					deviceModel == null ||
+					deviceSerialNumber == null ||
+					deviceToken == null) {
+				System.err.println("One or more of the required properties is missing. Aborting.");
+				System.exit(1);
+			}
 		} catch (final IOException e) {
 			System.err.println("Could not read file " + args[0] + ". Aborting.");
+			System.exit(1);
+		} catch (final NumberFormatException e) {
+			System.err.println("Invalid port number in properties file. Aborting.");
+			System.exit(1);
 		}
 
 		final Map<Integer, ObjectModel> objectModels = new HashMap<>();
