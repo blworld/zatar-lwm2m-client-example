@@ -115,7 +115,7 @@ public class ExampleLwM2mDeviceMain {
 	private static ObjectModel createDevTokenObjectModel() {
 		final Map<Integer, ResourceModel> resources = new HashMap<Integer, ResourceModel>();
 		resources.put(0, new ResourceModel(0, "Token", Operations.R, false, false, Type.STRING, "", "", ""));
-		resources.put(3, new ResourceModel(1, "Validation", Operations.W, false, false, Type.INTEGER, "", "", ""));
+		resources.put(3, new ResourceModel(3, "Validation", Operations.W, false, false, Type.INTEGER, "", "", ""));
 		return new ObjectModel(23854, "Zatar Device Token", "", false, true, resources);
 	}
 
@@ -150,7 +150,7 @@ public class ExampleLwM2mDeviceMain {
 				case 0:
 					return new ValueResponse(ResponseCode.CONTENT,
 							new LwM2mResource(0, Value.newStringValue(deviceToken)));
-				case 1:
+				case 3:
 					return new ValueResponse(ResponseCode.METHOD_NOT_ALLOWED);
 				default:
 					return new ValueResponse(ResponseCode.NOT_FOUND);
