@@ -4,7 +4,7 @@ apply plugin: 'gradle-one-jar'
 buildscript {
     repositories {
         mavenCentral()
-        maven {url "http://localhost:1234/nexus/content/repositories/thirdparty-snapshot"}
+        mavenLocal()
     }
 
     dependencies {
