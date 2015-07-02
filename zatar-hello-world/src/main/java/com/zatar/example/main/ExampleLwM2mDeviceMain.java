@@ -2,6 +2,7 @@ package com.zatar.example.main;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,10 +15,8 @@ import org.eclipse.leshan.client.californium.LeshanClientBuilder;
 import org.eclipse.leshan.client.resource.BaseInstanceEnabler;
 import org.eclipse.leshan.client.resource.ObjectsInitializer;
 import org.eclipse.leshan.core.model.LwM2mModel;
+import org.eclipse.leshan.core.model.ObjectLoader;
 import org.eclipse.leshan.core.model.ObjectModel;
-import org.eclipse.leshan.core.model.ResourceModel;
-import org.eclipse.leshan.core.model.ResourceModel.Operations;
-import org.eclipse.leshan.core.model.ResourceModel.Type;
 import org.eclipse.leshan.core.node.LwM2mResource;
 import org.eclipse.leshan.core.node.Value;
 import org.eclipse.leshan.core.node.Value.DataType;
@@ -72,8 +71,16 @@ public class ExampleLwM2mDeviceMain {
 		}
 
 		final Map<Integer, ObjectModel> objectModels = new HashMap<>();
-		objectModels.put(3, createDeviceObjectModel());
-		objectModels.put(23854, createDevTokenObjectModel());
+		// load OMA objects
+		loadModelObjects(objectModels, ObjectLoader.loadDefault());
+		// load Zatar objects
+		final InputStream input = ExampleLwM2mDeviceMain.class.getResourceAsStream("/custom_oma_object_specs/zatar-objects-spec.json");
+		if (input == null) {
+			System.err.println("Unable to load zatar object models");
+		} else {
+			loadModelObjects(objectModels, ObjectLoader.loadJsonStream(input));
+		}
+
 		final ObjectsInitializer initializer = new ObjectsInitializer(new LwM2mModel(objectModels));
 		initializer.setClassForObject(3, Device.class);
 		initializer.setClassForObject(23854, DevToken.class);
@@ -104,27 +111,27 @@ public class ExampleLwM2mDeviceMain {
 		});
 	}
 
-	private static ObjectModel createDeviceObjectModel() {
-		final Map<Integer, ResourceModel> resources = new HashMap<Integer, ResourceModel>();
-		resources.put(0, new ResourceModel(0, "Manufacturer", Operations.R, false, false, Type.STRING, "", "", ""));
-		resources.put(1, new ResourceModel(1, "Model", Operations.R, false, false, Type.STRING, "", "", ""));
-		resources.put(2, new ResourceModel(2, "Serial Number", Operations.R, false, false, Type.STRING, "", "", ""));
-		return new ObjectModel(3, "Device", "", false, true, resources);
+	private static final void loadModelObjects(final Map<Integer, ObjectModel> map, final Iterable<ObjectModel> models) {
+		for (final ObjectModel model : models) {
+			System.out.println("Loading object model: " + model);
+			final ObjectModel old = map.put(model.id, model);
+			if (old != null) {
+				System.out.println("Model already exists for object " + model.id + ". Overriding it.");
+			}
+		}
 	}
-
-	private static ObjectModel createDevTokenObjectModel() {
-		final Map<Integer, ResourceModel> resources = new HashMap<Integer, ResourceModel>();
-		resources.put(0, new ResourceModel(0, "Token", Operations.R, false, false, Type.STRING, "", "", ""));
-		resources.put(3, new ResourceModel(3, "Validation", Operations.W, false, false, Type.INTEGER, "", "", ""));
-		return new ObjectModel(23854, "Zatar Device Token", "", false, true, resources);
-	}
-
 
 	public static class Device extends BaseInstanceEnabler {
 
 
+		public Device() {
+			System.out.println("Device instance created.");
+		}
+
+
 		@Override
 		public ValueResponse read(final int resourceId) {
+			System.out.println("Read request received on Device for resource ID " + resourceId);
 			switch (resourceId) {
 				case 0:
 					return new ValueResponse(ResponseCode.CONTENT,
@@ -144,8 +151,13 @@ public class ExampleLwM2mDeviceMain {
 
 	public static class DevToken extends BaseInstanceEnabler {
 
+		public DevToken() {
+			System.out.println("DevToken instance created.");
+		}
+
 		@Override
 		public ValueResponse read(final int resourceId) {
+			System.out.println("Read request received on DevToken for resource ID " + resourceId);
 			switch (resourceId) {
 				case 0:
 					return new ValueResponse(ResponseCode.CONTENT,
