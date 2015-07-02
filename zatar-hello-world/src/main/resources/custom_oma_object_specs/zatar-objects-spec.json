@@ -1,0 +1,55 @@
+[
+  {
+    "name": "Zatar Device Authentication",
+    "id": 23854,
+    "instancetype": "single",
+    "mandatory": true,
+    "description": "Description: This is the device driver authentication token LWM2M object that Zatar requires for all device drivers.",
+    "resourcedefs": [
+      {
+        "id": 0,
+        "name": "Zatar Device Authentication Token",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": true,
+        "type": "opaque",
+        "range": "",
+        "units": "",
+        "description": "A sequence of bytes representing the private identity of the Registered Developer on Zatar. This Token may be reused across many Models/Types, defined by the owning Developer of the Token."
+      },
+      {
+        "id": 1,
+        "name": "Model Number",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "A device model identifier."
+      },
+      {
+        "id": 2,
+        "name": "Serial Number",
+        "operations": "R",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "string",
+        "range": "",
+        "units": "",
+        "description": "A device serial number."
+      },
+      {
+        "id": 3,
+        "name": "Authentication Status",
+        "operations": "W",
+        "instancetype": "single",
+        "mandatory": false,
+        "type": "integer",
+        "range": "0-1",
+        "units": "",
+        "description": "The status of this token's authentication. The server will write 0 to this resource on authentication failure and 1 to this resource on authentication success."
+      }
+    ]
+  }
+]
