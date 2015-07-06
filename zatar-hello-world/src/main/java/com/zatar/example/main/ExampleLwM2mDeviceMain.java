@@ -44,6 +44,7 @@ public class ExampleLwM2mDeviceMain {
 		final Map<Integer, ObjectModel> objectModels = new HashMap<>();
 		objectModels.put(3, createDeviceObjectModel());
 		objectModels.put(23854, createDevTokenObjectModel());
+
 		final ObjectsInitializer initializer = new ObjectsInitializer(new LwM2mModel(objectModels));
 		initializer.setClassForObject(3, Device.class);
 		initializer.setClassForObject(23854, DevToken.class);
@@ -159,7 +160,7 @@ public class ExampleLwM2mDeviceMain {
 			System.err.println("Usage: java -jar <jar> <properties-file>");
 			System.exit(1);
 		}
-	
+
 		try {
 			final Properties props = new Properties();
 			props.load(new FileInputStream(args[0]));
@@ -169,7 +170,7 @@ public class ExampleLwM2mDeviceMain {
 			deviceModel = props.getProperty("device.model");
 			deviceSerialNumber = props.getProperty("device.serial.number");
 			deviceToken = props.getProperty("device.token");
-	
+
 			if (zatarHostname == null ||
 					zatarPort == null ||
 					deviceManufacturer == null ||
