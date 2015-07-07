@@ -64,7 +64,7 @@ public class ExampleLwM2mDeviceMain {
 			@Override
 			public void run() {
 				if (registrationID != null) {
-					System.out.println("\tDevice: Deregistering Client '" + registrationID + "'");
+					System.out.println("\nDeregistering Client '" + registrationID + "'");
 					client.send(new DeregisterRequest(registrationID));
 					client.stop();
 				}
