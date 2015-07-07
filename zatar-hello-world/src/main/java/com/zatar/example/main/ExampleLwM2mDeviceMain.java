@@ -52,8 +52,7 @@ public class ExampleLwM2mDeviceMain {
 				setBindingMode(BindingMode.T).
 				setServerAddress(new InetSocketAddress(zatarHostname, zatarPort)).
 				setObjectsInitializer(initializer).
-				build(3, 23854);
-
+				build();
 		client.start();
 
 		final String endpoint = UUID.randomUUID().toString();
