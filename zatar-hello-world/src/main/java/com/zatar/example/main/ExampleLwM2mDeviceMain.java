@@ -35,14 +35,12 @@ public class ExampleLwM2mDeviceMain {
 		initProperties(args);
 
 		final Map<Integer, ResourceModel> deviceResources = new HashMap<Integer, ResourceModel>();
-		deviceResources.put(0, new ResourceModel(0, deviceManufacturer, Operations.R, false, false, Type.STRING, "", "", ""));
 		deviceResources.put(1, new ResourceModel(1, deviceModel, Operations.R, false, false, Type.STRING, "", "", ""));
 		deviceResources.put(2, new ResourceModel(2, deviceSerialNumber, Operations.R, false, false, Type.STRING, "", "", ""));
 		final ObjectModel deviceObjectModel = new ObjectModel(3, "Device", "", false, true, deviceResources);
 
 		final Map<Integer, ResourceModel> devTokenResources = new HashMap<Integer, ResourceModel>();
 		devTokenResources.put(0, new ResourceModel(0, deviceToken, Operations.R, false, false, Type.STRING, "", "", ""));
-		devTokenResources.put(3, new ResourceModel(3, "-1", Operations.W, false, false, Type.INTEGER, "", "", ""));
 		final ObjectModel devTokenObjectModel = new ObjectModel(23854, "Zatar Device Token", "", false, true, devTokenResources);
 
 		final Map<Integer, ObjectModel> objectModels = new HashMap<>();
