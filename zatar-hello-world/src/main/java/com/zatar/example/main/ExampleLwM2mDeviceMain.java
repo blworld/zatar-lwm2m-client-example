@@ -46,7 +46,6 @@ public class ExampleLwM2mDeviceMain {
 		final Map<Integer, ObjectModel> objectModels = new HashMap<>();
 		objectModels.put(3, deviceObjectModel);
 		objectModels.put(23854, devTokenObjectModel);
-
 		final ObjectsInitializer initializer = new ObjectsInitializer(new LwM2mModel(objectModels));
 
 		final LwM2mClient client = new LeshanClientBuilder().
@@ -56,13 +55,13 @@ public class ExampleLwM2mDeviceMain {
 				build(3, 23854);
 
 		client.start();
+
 		final String endpoint = UUID.randomUUID().toString();
 		final RegisterResponse response = client.send(new RegisterRequest(endpoint));
 		final String registrationID = response.getRegistrationID();
 		System.out.println("Registered with ID: " + registrationID);
 
 		Runtime.getRuntime().addShutdownHook(new Thread() {
-
 			@Override
 			public void run() {
 				if (registrationID != null) {
@@ -71,7 +70,6 @@ public class ExampleLwM2mDeviceMain {
 					client.stop();
 				}
 			}
-
 		});
 	}
 
