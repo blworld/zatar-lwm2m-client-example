@@ -8,25 +8,18 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
 
-import org.eclipse.leshan.ResponseCode;
 import org.eclipse.leshan.client.LwM2mClient;
 import org.eclipse.leshan.client.californium.LeshanClientBuilder;
-import org.eclipse.leshan.client.resource.BaseInstanceEnabler;
 import org.eclipse.leshan.client.resource.ObjectsInitializer;
 import org.eclipse.leshan.core.model.LwM2mModel;
 import org.eclipse.leshan.core.model.ObjectModel;
 import org.eclipse.leshan.core.model.ResourceModel;
 import org.eclipse.leshan.core.model.ResourceModel.Operations;
 import org.eclipse.leshan.core.model.ResourceModel.Type;
-import org.eclipse.leshan.core.node.LwM2mResource;
-import org.eclipse.leshan.core.node.Value;
-import org.eclipse.leshan.core.node.Value.DataType;
 import org.eclipse.leshan.core.request.BindingMode;
 import org.eclipse.leshan.core.request.DeregisterRequest;
 import org.eclipse.leshan.core.request.RegisterRequest;
-import org.eclipse.leshan.core.response.LwM2mResponse;
 import org.eclipse.leshan.core.response.RegisterResponse;
-import org.eclipse.leshan.core.response.ValueResponse;
 
 public class ExampleLwM2mDeviceMain {
 
@@ -41,13 +34,22 @@ public class ExampleLwM2mDeviceMain {
 	public static void main(final String[] args) {
 		initProperties(args);
 
+		final Map<Integer, ResourceModel> deviceResources = new HashMap<Integer, ResourceModel>();
+		deviceResources.put(0, new ResourceModel(0, deviceManufacturer, Operations.R, false, false, Type.STRING, "", "", ""));
+		deviceResources.put(1, new ResourceModel(1, deviceModel, Operations.R, false, false, Type.STRING, "", "", ""));
+		deviceResources.put(2, new ResourceModel(2, deviceSerialNumber, Operations.R, false, false, Type.STRING, "", "", ""));
+		final ObjectModel deviceObjectModel = new ObjectModel(3, "Device", "", false, true, deviceResources);
+
+		final Map<Integer, ResourceModel> devTokenResources = new HashMap<Integer, ResourceModel>();
+		devTokenResources.put(0, new ResourceModel(0, deviceToken, Operations.R, false, false, Type.STRING, "", "", ""));
+		devTokenResources.put(3, new ResourceModel(3, "-1", Operations.W, false, false, Type.INTEGER, "", "", ""));
+		final ObjectModel devTokenObjectModel = new ObjectModel(23854, "Zatar Device Token", "", false, true, devTokenResources);
+
 		final Map<Integer, ObjectModel> objectModels = new HashMap<>();
-		objectModels.put(3, createDeviceObjectModel());
-		objectModels.put(23854, createDevTokenObjectModel());
+		objectModels.put(3, deviceObjectModel);
+		objectModels.put(23854, devTokenObjectModel);
 
 		final ObjectsInitializer initializer = new ObjectsInitializer(new LwM2mModel(objectModels));
-		initializer.setClassForObject(3, Device.class);
-		initializer.setClassForObject(23854, DevToken.class);
 
 		final LwM2mClient client = new LeshanClientBuilder().
 				setBindingMode(BindingMode.T).
@@ -77,82 +79,17 @@ public class ExampleLwM2mDeviceMain {
 
 	private static ObjectModel createDeviceObjectModel() {
 		final Map<Integer, ResourceModel> resources = new HashMap<Integer, ResourceModel>();
-		resources.put(0, new ResourceModel(0, "Manufacturer", Operations.R, false, false, Type.STRING, "", "", ""));
-		resources.put(1, new ResourceModel(1, "Model", Operations.R, false, false, Type.STRING, "", "", ""));
-		resources.put(2, new ResourceModel(2, "Serial Number", Operations.R, false, false, Type.STRING, "", "", ""));
+		resources.put(0, new ResourceModel(0, deviceManufacturer, Operations.R, false, false, Type.STRING, "", "", ""));
+		resources.put(1, new ResourceModel(1, deviceModel, Operations.R, false, false, Type.STRING, "", "", ""));
+		resources.put(2, new ResourceModel(2, deviceSerialNumber, Operations.R, false, false, Type.STRING, "", "", ""));
 		return new ObjectModel(3, "Device", "", false, true, resources);
 	}
 
 	private static ObjectModel createDevTokenObjectModel() {
 		final Map<Integer, ResourceModel> resources = new HashMap<Integer, ResourceModel>();
-		resources.put(0, new ResourceModel(0, "Token", Operations.R, false, false, Type.STRING, "", "", ""));
-		resources.put(3, new ResourceModel(3, "Validation", Operations.W, false, false, Type.INTEGER, "", "", ""));
+		resources.put(0, new ResourceModel(0, deviceToken, Operations.R, false, false, Type.STRING, "", "", ""));
+		resources.put(3, new ResourceModel(3, "-1", Operations.W, false, false, Type.INTEGER, "", "", ""));
 		return new ObjectModel(23854, "Zatar Device Token", "", false, true, resources);
-	}
-
-
-	public static class Device extends BaseInstanceEnabler {
-
-
-		@Override
-		public ValueResponse read(final int resourceId) {
-			switch (resourceId) {
-				case 0:
-					return new ValueResponse(ResponseCode.CONTENT,
-							new LwM2mResource(0, Value.newStringValue(deviceManufacturer)));
-				case 1:
-					return new ValueResponse(ResponseCode.CONTENT,
-							new LwM2mResource(1, Value.newStringValue(deviceModel)));
-				case 2:
-					return new ValueResponse(ResponseCode.CONTENT,
-							new LwM2mResource(2, Value.newStringValue(deviceSerialNumber)));
-				default:
-					return new ValueResponse(ResponseCode.NOT_FOUND);
-			}
-		}
-
-	}
-
-	public static class DevToken extends BaseInstanceEnabler {
-
-		@Override
-		public ValueResponse read(final int resourceId) {
-			switch (resourceId) {
-				case 0:
-					return new ValueResponse(ResponseCode.CONTENT,
-							new LwM2mResource(0, Value.newStringValue(deviceToken)));
-				case 3:
-					return new ValueResponse(ResponseCode.METHOD_NOT_ALLOWED);
-				default:
-					return new ValueResponse(ResponseCode.NOT_FOUND);
-			}
-		}
-
-		@Override
-		public LwM2mResponse write(final int resourceId, final LwM2mResource resource) {
-			switch (resourceId) {
-				case 0:
-					return new LwM2mResponse(ResponseCode.METHOD_NOT_ALLOWED);
-				case 3:
-					if (resource.getValue().type == DataType.INTEGER) {
-						@SuppressWarnings("unchecked")
-						final Value<Integer> value = (Value<Integer>) resource.getValue();
-						final int validated = value.value;
-						if (validated == 1) {
-							System.out.println("Device Token was accepted");
-							return new LwM2mResponse(ResponseCode.CHANGED);
-						}
-						if (validated == 0) {
-							System.out.println("Device Token was rejected");
-							return new LwM2mResponse(ResponseCode.CHANGED);
-						}
-					}
-					return new LwM2mResponse(ResponseCode.BAD_REQUEST);
-				default:
-					return new LwM2mResponse(ResponseCode.NOT_FOUND);
-			}
-		}
-
 	}
 
 	private static void initProperties(final String[] args) {
