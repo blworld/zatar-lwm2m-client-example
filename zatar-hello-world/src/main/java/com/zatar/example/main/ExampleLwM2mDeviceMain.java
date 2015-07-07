@@ -77,21 +77,6 @@ public class ExampleLwM2mDeviceMain {
 		});
 	}
 
-	private static ObjectModel createDeviceObjectModel() {
-		final Map<Integer, ResourceModel> resources = new HashMap<Integer, ResourceModel>();
-		resources.put(0, new ResourceModel(0, deviceManufacturer, Operations.R, false, false, Type.STRING, "", "", ""));
-		resources.put(1, new ResourceModel(1, deviceModel, Operations.R, false, false, Type.STRING, "", "", ""));
-		resources.put(2, new ResourceModel(2, deviceSerialNumber, Operations.R, false, false, Type.STRING, "", "", ""));
-		return new ObjectModel(3, "Device", "", false, true, resources);
-	}
-
-	private static ObjectModel createDevTokenObjectModel() {
-		final Map<Integer, ResourceModel> resources = new HashMap<Integer, ResourceModel>();
-		resources.put(0, new ResourceModel(0, deviceToken, Operations.R, false, false, Type.STRING, "", "", ""));
-		resources.put(3, new ResourceModel(3, "-1", Operations.W, false, false, Type.INTEGER, "", "", ""));
-		return new ObjectModel(23854, "Zatar Device Token", "", false, true, resources);
-	}
-
 	private static void initProperties(final String[] args) {
 		if (args.length != 1) {
 			System.err.println("Usage: java -jar <jar> <properties-file>");
