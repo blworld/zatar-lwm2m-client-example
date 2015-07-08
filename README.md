@@ -23,8 +23,8 @@ This will generate the jar at ```build/libs/zatar-hello-world-standalone.jar```.
 
 Before you run this, you will need to update the properties file.
 ```
-zatar.hostname=devices-lwm2m-min.zatar.com
-zatar.port=5682
+zatar.hostname=beta-devices.zatar.com
+zatar.port=5683
 
 device.model=zatarhelloworld1
 device.serial.number=ZHW12345
