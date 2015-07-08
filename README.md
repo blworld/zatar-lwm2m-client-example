@@ -26,7 +26,6 @@ Before you run this, you will need to update the properties file.
 zatar.hostname=devices-lwm2m-min.zatar.com
 zatar.port=5682
 
-device.manufacturer=Zatar Example Devices, Inc
 device.model=zatarhelloworld1
 device.serial.number=ZHW12345
 device.token=example token
