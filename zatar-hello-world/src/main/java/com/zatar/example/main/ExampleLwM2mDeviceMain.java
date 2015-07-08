@@ -26,7 +26,6 @@ public class ExampleLwM2mDeviceMain {
 	private static String zatarHostname;
 	private static Integer zatarPort;
 
-	private static String deviceManufacturer;
 	private static String deviceModel;
 	private static String deviceSerialNumber;
 	private static String deviceToken;
@@ -83,14 +82,12 @@ public class ExampleLwM2mDeviceMain {
 			props.load(new FileInputStream(args[0]));
 			zatarHostname = props.getProperty("zatar.hostname");
 			zatarPort = Integer.parseInt(props.getProperty("zatar.port"));
-			deviceManufacturer = props.getProperty("device.manufacturer");
 			deviceModel = props.getProperty("device.model");
 			deviceSerialNumber = props.getProperty("device.serial.number");
 			deviceToken = props.getProperty("device.token");
 
 			if (zatarHostname == null ||
 					zatarPort == null ||
-					deviceManufacturer == null ||
 					deviceModel == null ||
 					deviceSerialNumber == null ||
 					deviceToken == null) {
