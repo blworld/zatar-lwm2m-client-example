@@ -1,0 +1,8 @@
+Californium.properties
+.classpath
+.gradle
+.project
+.settings
+bin/
+build/
+*~

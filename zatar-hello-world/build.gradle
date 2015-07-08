@@ -1,0 +1,36 @@
+apply plugin: 'java'
+apply plugin: 'gradle-one-jar'
+
+buildscript {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+
+    dependencies {
+        classpath 'com.github.rholder:gradle-one-jar:1.0.4'
+    }
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    compile files (
+        '../libs/leshan-core-99.0.3-SNAPSHOT.jar',
+        '../libs/leshan-client-core-99.0.3-SNAPSHOT.jar',
+        '../libs/leshan-client-cf-99.0.3-SNAPSHOT.jar',
+        '../libs/californium-core-99.0.0-SNAPSHOT.jar',
+        '../libs/element-connector-99.0.0-SNAPSHOT.jar',
+        '../libs/scandium-1.0.0-M3.jar')
+        
+    compile('io.netty:netty-all:4.1.0.Beta4')
+    compile('com.google.code.gson:gson:2.2.4')
+    compile('org.slf4j:slf4j-api:1.7.12')
+}
+
+task buildHelloWorld(type: OneJar) {
+    mainClass = 'com.zatar.example.main.ExampleLwM2mDeviceMain'
+}
