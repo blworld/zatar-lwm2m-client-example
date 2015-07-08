@@ -23,8 +23,8 @@ This will generate the jar at ```build/libs/zatar-hello-world-standalone.jar```.
 
 Before you run this, you will need to update the properties file.
 ```
-zatar.hostname=devices.zatar.com
-zatar.port=5683
+zatar.hostname=devices-lwm2m-min.zatar.com
+zatar.port=5682
 
 device.manufacturer=Zatar Example Devices, Inc
 device.model=zatarhelloworld1
@@ -78,7 +78,7 @@ So let's dive into the code defining the object model.
 > The fundamental unit in LWM2M is a resource. Resources are grouped into objects. A device's object model is the definition of which resources get grouped into which objects, how to create instances of those objects, and how to read, write, and execute those resources.
 
 Noting this, let's examine lines 37-40
-```
+```java
 		final Map<Integer, ResourceModel> deviceResources = new HashMap<Integer, ResourceModel>();
 		deviceResources.put(1, new ResourceModel(1, deviceModel, Operations.R, false, false, Type.STRING, "", "", ""));
 		deviceResources.put(2, new ResourceModel(2, deviceSerialNumber, Operations.R, false, false, Type.STRING, "", "", ""));
@@ -91,7 +91,7 @@ This defines two resources and attaches them to object 3 (the object ID in the l
 * The third parameter for each resource is ```Operations.R```. That tells the library that the Write and Execute commands are not supported for those resources. Further tutorials will explore what happens when that enumeration is set to something else. The valid values for that are any combination of "R", "W", and "E".
 
 There is one additional required object model - 23854 - the Zebra object.
-```
+```java
 		final Map<Integer, ResourceModel> devTokenResources = new HashMap<Integer, ResourceModel>();
 		devTokenResources.put(0, new ResourceModel(0, deviceToken, Operations.R, false, false, Type.STRING, "", "", ""));
 		final ObjectModel devTokenObjectModel = new ObjectModel(23854, "Zatar Device Token", "", false, true, devTokenResources);
@@ -100,7 +100,7 @@ There is one additional required object model - 23854 - the Zebra object.
 This defines just one resource: ```/23854/0/0```, the Device Token that you created earlier.
 
 To tie these objects together into a single object model, we use an ```ObjectsInitializer```:
-```
+```java
 		final Map<Integer, ObjectModel> objectModels = new HashMap<>();
 		objectModels.put(3, deviceObjectModel);
 		objectModels.put(23854, devTokenObjectModel);
@@ -112,7 +112,7 @@ Remember that ```initializer``` object. In more advanced applications, the ```Ob
 Note: As with the ```ResourceModel```s above, the key for each ```ObjectModel``` entry must equal the object ID provided in the object's constructor.
 
 Now that we've initialized the object model, we can actually connect and register to Zatar's LWM2M server.
-```
+```java
 		final LwM2mClient client = new LeshanClientBuilder().
 				setBindingMode(BindingMode.T).
 				setServerAddress(new InetSocketAddress(zatarHostname, zatarPort)).
@@ -129,7 +129,7 @@ Now that we've initialized the object model, we can actually connect and registe
 This code creates the client using the ```LeshanClientBuilder```, sets the binding mode, uses the server information provided in the properties file, and attaches the ```ObjectsInitializer``` created above. The next chunk sends a ```RegisterRequest``` with a randomly generated endpoint, and prints the registration ID returned by the server.
 
 Finally, we add a simple shutdown hook, so that on shutdown, the client sends a ```DeregisterRequest``` with the registration ID retrieved above, and then stops the client.
-```
+```java
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			@Override
 			public void run() {
