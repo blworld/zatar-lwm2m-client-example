@@ -3,10 +3,14 @@ package com.zatar.example.main;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
+
+import javax.net.ssl.SSLContext;
 
 import org.eclipse.leshan.client.LwM2mClient;
 import org.eclipse.leshan.client.californium.LeshanClientBuilder;
@@ -16,7 +20,6 @@ import org.eclipse.leshan.core.model.ObjectModel;
 import org.eclipse.leshan.core.model.ResourceModel;
 import org.eclipse.leshan.core.model.ResourceModel.Operations;
 import org.eclipse.leshan.core.model.ResourceModel.Type;
-import org.eclipse.leshan.core.request.BindingMode;
 import org.eclipse.leshan.core.request.DeregisterRequest;
 import org.eclipse.leshan.core.request.RegisterRequest;
 import org.eclipse.leshan.core.response.RegisterResponse;
@@ -29,8 +32,10 @@ public class ExampleLwM2mDeviceMain {
 	private static String deviceModel;
 	private static String deviceSerialNumber;
 	private static String deviceToken;
+	
+	private static String tlsProtocol;
 
-	public static void main(final String[] args) {
+	public static void main(final String[] args) throws NoSuchAlgorithmException, KeyManagementException {
 		initProperties(args);
 
 		final Map<Integer, ResourceModel> deviceResources = new HashMap<Integer, ResourceModel>();
@@ -47,8 +52,10 @@ public class ExampleLwM2mDeviceMain {
 		objectModels.put(23854, devTokenObjectModel);
 		final ObjectsInitializer initializer = new ObjectsInitializer(new LwM2mModel(objectModels));
 
-		final LwM2mClient client = new LeshanClientBuilder().
-				setBindingMode(BindingMode.T).
+		final SSLContext context = SSLContext.getInstance("TLSv1.2");
+		context.init(null, null, null);
+		final LwM2mClient client = new LeshanClientBuilder()
+				.addBindingModeTCPClient().secure().setSSLContext(context).configure().configure().
 				setServerAddress(new InetSocketAddress(zatarHostname, zatarPort)).
 				setObjectsInitializer(initializer).
 				build();
@@ -85,12 +92,15 @@ public class ExampleLwM2mDeviceMain {
 			deviceModel = props.getProperty("device.model");
 			deviceSerialNumber = props.getProperty("device.serial.number");
 			deviceToken = props.getProperty("device.token");
+			tlsProtocol = props.getProperty("tls.protocol");
+
 
 			if (zatarHostname == null ||
 					zatarPort == null ||
 					deviceModel == null ||
 					deviceSerialNumber == null ||
-					deviceToken == null) {
+					deviceToken == null || 
+					tlsProtocol == null) {
 				System.err.println("One or more of the required properties is missing. Aborting.");
 				System.exit(1);
 			}
