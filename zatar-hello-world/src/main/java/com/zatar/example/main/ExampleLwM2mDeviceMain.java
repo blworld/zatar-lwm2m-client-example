@@ -35,7 +35,7 @@ public class ExampleLwM2mDeviceMain {
 	
 	private static String tlsProtocol;
 
-	public static void main(final String[] args) throws NoSuchAlgorithmException, KeyManagementException {
+	public static void main(final String[] args) {
 		initProperties(args);
 
 		final Map<Integer, ResourceModel> deviceResources = new HashMap<Integer, ResourceModel>();
@@ -51,9 +51,19 @@ public class ExampleLwM2mDeviceMain {
 		objectModels.put(3, deviceObjectModel);
 		objectModels.put(23854, devTokenObjectModel);
 		final ObjectsInitializer initializer = new ObjectsInitializer(new LwM2mModel(objectModels));
-
-		final SSLContext context = SSLContext.getInstance("TLSv1.2");
-		context.init(null, null, null);
+		SSLContext context;
+		try {
+			context = SSLContext.getInstance("TLSv1.2");
+			context.init(null, null, null);
+		} catch (final NoSuchAlgorithmException e) {
+			System.out.println("There was problem initilizaing the TLS objects, please make sure that chosen protocol exist");
+			e.printStackTrace();
+			System.exit(-1);
+		} catch (final KeyManagementException e) {
+			System.out.println("There was problem initilizaing the TLS objects, please make sure that keystore exsists");
+			e.printStackTrace();
+			System.exit(-1);
+		}
 		final LwM2mClient client = new LeshanClientBuilder()
 				.addBindingModeTCPClient().secure().setSSLContext(context).configure().configure().
 				setServerAddress(new InetSocketAddress(zatarHostname, zatarPort)).
