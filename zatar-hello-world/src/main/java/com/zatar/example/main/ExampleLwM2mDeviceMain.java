@@ -51,7 +51,7 @@ public class ExampleLwM2mDeviceMain {
 		objectModels.put(3, deviceObjectModel);
 		objectModels.put(23854, devTokenObjectModel);
 		final ObjectsInitializer initializer = new ObjectsInitializer(new LwM2mModel(objectModels));
-		SSLContext context;
+		SSLContext context = null;
 		try {
 			context = SSLContext.getInstance("TLSv1.2");
 			context.init(null, null, null);
