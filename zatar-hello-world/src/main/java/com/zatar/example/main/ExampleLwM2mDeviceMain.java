@@ -53,7 +53,7 @@ public class ExampleLwM2mDeviceMain {
 		final ObjectsInitializer initializer = new ObjectsInitializer(new LwM2mModel(objectModels));
 		SSLContext context = null;
 		try {
-			context = SSLContext.getInstance("TLSv1.2");
+			context = SSLContext.getInstance(tlsProtocol);
 			context.init(null, null, null);
 		} catch (final NoSuchAlgorithmException e) {
 			System.out.println("There was problem initilizaing the TLS objects, please make sure that chosen protocol exist");
