@@ -56,11 +56,11 @@ public class ExampleLwM2mDeviceMain {
 			context = SSLContext.getInstance(tlsProtocol);
 			context.init(null, null, null);
 		} catch (final NoSuchAlgorithmException e) {
-			System.out.println("There was problem initilizaing the TLS objects, please make sure that chosen protocol exist");
+			System.out.println("There was problem initializing the TLS objects, please make sure that chosen protocol exists");
 			e.printStackTrace();
 			System.exit(-1);
 		} catch (final KeyManagementException e) {
-			System.out.println("There was problem initilizaing the TLS objects, please make sure that keystore exsists");
+			System.out.println("There was problem initializing the TLS objects, please make sure that keystore exists");
 			e.printStackTrace();
 			System.exit(-1);
 		}
