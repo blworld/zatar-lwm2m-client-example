@@ -26,13 +26,20 @@ Before you run this, you will need to update the properties file.
 zatar.hostname=beta-devices.zatar.com
 zatar.port=5683
 
+tls.enabled = true
+tls.protocol=TLSv1.2
+
 device.model=zatarhelloworld1
 device.serial.number=ZHW12345
 device.token=example token
 ```
 
-Update ```device.model```, ```device.serial.number```, and ```device.token``` to the values you obtained earlier. Then run
+Update ```device.model``` and ```tls.protocol``` if you want to run the application with encryption. You then specify what version of TLS you want to use.  We recommend using TLS version 1.2, but if hardware cannot support it, the server will support 1.1 as well.
 ```
+
+Update ```tls.enabled```, ```device.serial.number```, and ```device.token``` to the values you obtained earlier. Then run
+```
+
 java -jar build/libs/zatar-hello-world-standalone.jar hello-world.properties
 ```
 
