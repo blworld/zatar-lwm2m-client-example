@@ -3,20 +3,24 @@ package com.zatar.example.main;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
 
+import javax.net.ssl.SSLContext;
+
 import org.eclipse.leshan.client.LwM2mClient;
 import org.eclipse.leshan.client.californium.LeshanClientBuilder;
+import org.eclipse.leshan.client.californium.LeshanClientBuilder.TCPConfigBuilder;
 import org.eclipse.leshan.client.resource.ObjectsInitializer;
 import org.eclipse.leshan.core.model.LwM2mModel;
 import org.eclipse.leshan.core.model.ObjectModel;
 import org.eclipse.leshan.core.model.ResourceModel;
 import org.eclipse.leshan.core.model.ResourceModel.Operations;
 import org.eclipse.leshan.core.model.ResourceModel.Type;
-import org.eclipse.leshan.core.request.BindingMode;
 import org.eclipse.leshan.core.request.DeregisterRequest;
 import org.eclipse.leshan.core.request.RegisterRequest;
 import org.eclipse.leshan.core.response.RegisterResponse;
@@ -29,6 +33,9 @@ public class ExampleLwM2mDeviceMain {
 	private static String deviceModel;
 	private static String deviceSerialNumber;
 	private static String deviceToken;
+	
+	private static String tlsProtocol;
+	private static boolean isTlsEnabled;
 
 	public static void main(final String[] args) {
 		initProperties(args);
@@ -46,12 +53,30 @@ public class ExampleLwM2mDeviceMain {
 		objectModels.put(3, deviceObjectModel);
 		objectModels.put(23854, devTokenObjectModel);
 		final ObjectsInitializer initializer = new ObjectsInitializer(new LwM2mModel(objectModels));
-
-		final LwM2mClient client = new LeshanClientBuilder().
-				setBindingMode(BindingMode.T).
-				setServerAddress(new InetSocketAddress(zatarHostname, zatarPort)).
-				setObjectsInitializer(initializer).
-				build();
+		
+		final LeshanClientBuilder builder = new LeshanClientBuilder()
+											.setServerAddress(new InetSocketAddress(zatarHostname, zatarPort))
+											.setObjectsInitializer(initializer);
+		final TCPConfigBuilder tcpBuilder = builder.addBindingModeTCPClient();
+		if(isTlsEnabled) {
+			SSLContext context = null;
+			try {
+				context = SSLContext.getInstance(tlsProtocol);
+				context.init(null, null, null);
+			} catch (final NoSuchAlgorithmException e) {
+				System.out.println("There was problem initializing the TLS objects, please make sure that chosen protocol exists");
+				e.printStackTrace();
+				System.exit(-1);
+			} catch (final KeyManagementException e) {
+				System.out.println("There was problem initializing the TLS objects, please make sure that keystore exists");
+				e.printStackTrace();
+				System.exit(-1);
+			}
+			//configure TLS
+			tcpBuilder.secure().setSSLContext(context).configure();
+		}
+		//configure TCP and build a LWM2M Client
+		final LwM2mClient client = tcpBuilder.configure().build();
 		client.start();
 
 		final String endpoint = UUID.randomUUID().toString();
@@ -85,12 +110,16 @@ public class ExampleLwM2mDeviceMain {
 			deviceModel = props.getProperty("device.model");
 			deviceSerialNumber = props.getProperty("device.serial.number");
 			deviceToken = props.getProperty("device.token");
+			tlsProtocol = props.getProperty("tls.protocol");
+			isTlsEnabled = props.containsKey("tls.enabled") ? Boolean.parseBoolean(props.getProperty("tls.enabled")) : true;
+
 
 			if (zatarHostname == null ||
 					zatarPort == null ||
 					deviceModel == null ||
 					deviceSerialNumber == null ||
-					deviceToken == null) {
+					deviceToken == null || 
+					tlsProtocol == null) {
 				System.err.println("One or more of the required properties is missing. Aborting.");
 				System.exit(1);
 			}
