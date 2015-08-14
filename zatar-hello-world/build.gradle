@@ -19,9 +19,9 @@ repositories {
 
 dependencies {
     compile files (
-        '../libs/leshan-core-99.0.4-SNAPSHOT.jar',
-        '../libs/leshan-client-core-99.0.4-SNAPSHOT.jar',
-        '../libs/leshan-client-cf-99.0.4-SNAPSHOT.jar',
+        '../libs/leshan-core-99.0.5-SNAPSHOT.jar',
+        '../libs/leshan-client-core-99.0.5-SNAPSHOT.jar',
+        '../libs/leshan-client-cf-99.0.5-SNAPSHOT.jar',
         '../libs/californium-core-99.0.3-SNAPSHOT.jar',
         '../libs/element-connector-99.0.3-SNAPSHOT.jar',
         '../libs/scandium-1.0.0-M3.jar')
