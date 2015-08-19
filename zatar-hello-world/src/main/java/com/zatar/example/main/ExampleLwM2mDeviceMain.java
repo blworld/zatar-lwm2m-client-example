@@ -51,7 +51,7 @@ public class ExampleLwM2mDeviceMain {
 
 		final Map<Integer, ResourceModel> devTokenResources = new HashMap<Integer, ResourceModel>();
 		devTokenResources.put(0, new ResourceModel(0, deviceToken, Operations.R, false, false, Type.STRING, "", "", ""));
-		devTokenResources.put(3, new ResourceModel(3, deviceToken, Operations.W, false, false, Type.INTEGER, "", "", ""));
+		devTokenResources.put(1, new ResourceModel(1, deviceToken, Operations.W, false, false, Type.INTEGER, "", "", ""));
 		final ObjectModel devTokenObjectModel = new ObjectModel(23854, "Zatar Device Token", "", false, true, devTokenResources);
 
 		final Map<Integer, ObjectModel> objectModels = new HashMap<>();
@@ -143,7 +143,7 @@ public class ExampleLwM2mDeviceMain {
 
 		@Override
 		public LwM2mResponse write(final int resourceId, final LwM2mResource resource) {
-			if (resourceId == 3) {
+			if (resourceId == 1) {
 				@SuppressWarnings("unchecked")
 				final int value = ((Value<Integer>) resource.getValue()).value;
 				switch (value) {
