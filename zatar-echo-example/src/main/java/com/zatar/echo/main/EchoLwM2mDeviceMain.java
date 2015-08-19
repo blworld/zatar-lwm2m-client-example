@@ -37,7 +37,6 @@ public class EchoLwM2mDeviceMain {
 	private static String deviceManufacturer;
 	private static String deviceModel;
 	private static String deviceSerialNumber;
-	private static String deviceToken;
 
 	private static String tlsProtocol;
 	private static boolean isTlsEnabled;
@@ -52,7 +51,7 @@ public class EchoLwM2mDeviceMain {
 		final ObjectModel deviceObjectModel = new ObjectModel(3, "Device", "", false, true, deviceResources);
 
 		final Map<Integer, ResourceModel> devTokenResources = new HashMap<Integer, ResourceModel>();
-		devTokenResources.put(0, new ResourceModel(0, deviceToken, Operations.R, false, false, Type.STRING, "", "", ""));
+		devTokenResources.put(0, new ResourceModel(0, DeviceToken.deviceToken, Operations.R, false, false, Type.STRING, "", "", ""));
 		devTokenResources.put(1, new ResourceModel(1, "-1", Operations.W, false, false, Type.INTEGER, "", "", ""));
 		final ObjectModel devTokenObjectModel = new ObjectModel(23854, "Zatar Device Token", "", false, true, devTokenResources);
 
@@ -119,7 +118,7 @@ public class EchoLwM2mDeviceMain {
 			deviceManufacturer = props.getProperty("device.manufacturer");
 			deviceModel = props.getProperty("device.model");
 			deviceSerialNumber = props.getProperty("device.serial.number");
-			deviceToken = props.getProperty("device.token");
+			DeviceToken.deviceToken = props.getProperty("device.token");
 			tlsProtocol = props.getProperty("tls.protocol");
 			isTlsEnabled = props.containsKey("tls.enabled") ? Boolean.parseBoolean(props.getProperty("tls.enabled")) : true;
 
@@ -129,7 +128,7 @@ public class EchoLwM2mDeviceMain {
 					deviceManufacturer == null ||
 					deviceModel == null ||
 					deviceSerialNumber == null ||
-					deviceToken == null ||
+					DeviceToken.deviceToken == null ||
 					tlsProtocol == null) {
 				System.err.println("One or more of the required properties is missing. Aborting.");
 				System.exit(1);
@@ -144,6 +143,8 @@ public class EchoLwM2mDeviceMain {
 	}
 
 	public static class DeviceToken extends SimpleInstanceEnabler {
+
+		public static String deviceToken;
 
 		@Override
 		public LwM2mResponse write(final int resourceId, final LwM2mResource resource) {
