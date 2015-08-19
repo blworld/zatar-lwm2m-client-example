@@ -16,18 +16,16 @@ import org.eclipse.leshan.client.LwM2mClient;
 import org.eclipse.leshan.client.californium.LeshanClientBuilder;
 import org.eclipse.leshan.client.californium.LeshanClientBuilder.TCPConfigBuilder;
 import org.eclipse.leshan.client.resource.ObjectsInitializer;
-import org.eclipse.leshan.client.resource.SimpleInstanceEnabler;
 import org.eclipse.leshan.core.model.LwM2mModel;
 import org.eclipse.leshan.core.model.ObjectModel;
 import org.eclipse.leshan.core.model.ResourceModel;
 import org.eclipse.leshan.core.model.ResourceModel.Operations;
 import org.eclipse.leshan.core.model.ResourceModel.Type;
-import org.eclipse.leshan.core.node.LwM2mResource;
-import org.eclipse.leshan.core.node.Value;
 import org.eclipse.leshan.core.request.DeregisterRequest;
 import org.eclipse.leshan.core.request.RegisterRequest;
-import org.eclipse.leshan.core.response.LwM2mResponse;
 import org.eclipse.leshan.core.response.RegisterResponse;
+
+import com.zatar.echo.enablers.DeviceToken;
 
 public class EchoLwM2mDeviceMain {
 
@@ -118,10 +116,10 @@ public class EchoLwM2mDeviceMain {
 			deviceManufacturer = props.getProperty("device.manufacturer");
 			deviceModel = props.getProperty("device.model");
 			deviceSerialNumber = props.getProperty("device.serial.number");
-			DeviceToken.deviceToken = props.getProperty("device.token");
 			tlsProtocol = props.getProperty("tls.protocol");
 			isTlsEnabled = props.containsKey("tls.enabled") ? Boolean.parseBoolean(props.getProperty("tls.enabled")) : true;
 
+			DeviceToken.deviceToken = props.getProperty("device.token");
 
 			if (zatarHostname == null ||
 					zatarPort == null ||
@@ -140,36 +138,6 @@ public class EchoLwM2mDeviceMain {
 			System.err.println("Invalid port number in properties file. Aborting.");
 			System.exit(1);
 		}
-	}
-
-	public static class DeviceToken extends SimpleInstanceEnabler {
-
-		public static String deviceToken;
-
-		@Override
-		public LwM2mResponse write(final int resourceId, final LwM2mResource resource) {
-			if (resourceId == 1) {
-				@SuppressWarnings("unchecked")
-				final int value = ((Value<Integer>) resource.getValue()).value;
-				switch (value) {
-					case -1:
-						System.out.println("Registration reset");
-						break;
-					case 0:
-						System.out.println("Device token was rejected");
-						break;
-					case 1:
-						System.out.println("Device token was accepted");
-						break;
-					default:
-						System.out.println("Unrecognized validation value (" + value + ")");
-						break;
-				}
-			}
-
-			return super.write(resourceId, resource);
-		}
-
 	}
 
 }
