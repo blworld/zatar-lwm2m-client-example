@@ -12,25 +12,21 @@ import java.util.UUID;
 
 import javax.net.ssl.SSLContext;
 
-import org.eclipse.leshan.ResponseCode;
 import org.eclipse.leshan.client.LwM2mClient;
 import org.eclipse.leshan.client.californium.LeshanClientBuilder;
 import org.eclipse.leshan.client.californium.LeshanClientBuilder.TCPConfigBuilder;
 import org.eclipse.leshan.client.resource.ObjectsInitializer;
-import org.eclipse.leshan.client.resource.SimpleInstanceEnabler;
 import org.eclipse.leshan.core.model.LwM2mModel;
 import org.eclipse.leshan.core.model.ObjectModel;
 import org.eclipse.leshan.core.model.ResourceModel;
 import org.eclipse.leshan.core.model.ResourceModel.Operations;
 import org.eclipse.leshan.core.model.ResourceModel.Type;
-import org.eclipse.leshan.core.node.LwM2mResource;
-import org.eclipse.leshan.core.node.Value;
 import org.eclipse.leshan.core.request.DeregisterRequest;
 import org.eclipse.leshan.core.request.RegisterRequest;
 import org.eclipse.leshan.core.response.RegisterResponse;
-import org.eclipse.leshan.core.response.ValueResponse;
 
 import com.zatar.echo.enablers.DeviceToken;
+import com.zatar.echo.enablers.Echoer;
 
 public class EchoLwM2mDeviceMain {
 
@@ -152,20 +148,6 @@ public class EchoLwM2mDeviceMain {
 			System.err.println("The port number and default echo counts must both be integers. Aborting.");
 			System.exit(1);
 		}
-	}
-
-	public static class Echoer extends SimpleInstanceEnabler {
-
-		private static Integer echoCount;
-
-		@Override
-		public ValueResponse read(final int resourceId) {
-			if (resourceId == 1) {
-				return new ValueResponse(ResponseCode.CONTENT, new LwM2mResource(1, Value.newIntegerValue(echoCount)));
-			}
-			return super.read(resourceId);
-		}
-
 	}
 
 }
