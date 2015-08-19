@@ -34,6 +34,7 @@ public class EchoLwM2mDeviceMain {
 	private static String zatarHostname;
 	private static Integer zatarPort;
 
+	private static String deviceManufacturer;
 	private static String deviceModel;
 	private static String deviceSerialNumber;
 	private static String deviceToken;
@@ -45,6 +46,7 @@ public class EchoLwM2mDeviceMain {
 		initProperties(args);
 
 		final Map<Integer, ResourceModel> deviceResources = new HashMap<Integer, ResourceModel>();
+		deviceResources.put(0, new ResourceModel(0, deviceManufacturer, Operations.R, false, false, Type.STRING, "", "", ""));
 		deviceResources.put(1, new ResourceModel(1, deviceModel, Operations.R, false, false, Type.STRING, "", "", ""));
 		deviceResources.put(2, new ResourceModel(2, deviceSerialNumber, Operations.R, false, false, Type.STRING, "", "", ""));
 		final ObjectModel deviceObjectModel = new ObjectModel(3, "Device", "", false, true, deviceResources);
@@ -114,6 +116,7 @@ public class EchoLwM2mDeviceMain {
 			props.load(new FileInputStream(args[0]));
 			zatarHostname = props.getProperty("zatar.hostname");
 			zatarPort = Integer.parseInt(props.getProperty("zatar.port"));
+			deviceManufacturer = props.getProperty("device.manufacturer");
 			deviceModel = props.getProperty("device.model");
 			deviceSerialNumber = props.getProperty("device.serial.number");
 			deviceToken = props.getProperty("device.token");
@@ -123,6 +126,7 @@ public class EchoLwM2mDeviceMain {
 
 			if (zatarHostname == null ||
 					zatarPort == null ||
+					deviceManufacturer == null ||
 					deviceModel == null ||
 					deviceSerialNumber == null ||
 					deviceToken == null ||
