@@ -39,6 +39,8 @@ public class EchoLwM2mDeviceMain {
 	private static String tlsProtocol;
 	private static boolean isTlsEnabled;
 
+	private static Integer echoCount;
+
 	public static void main(final String[] args) {
 		initProperties(args);
 
@@ -53,9 +55,15 @@ public class EchoLwM2mDeviceMain {
 		devTokenResources.put(1, new ResourceModel(1, "-1", Operations.W, false, false, Type.INTEGER, "", "", ""));
 		final ObjectModel devTokenObjectModel = new ObjectModel(23854, "Zatar Device Token", "", false, true, devTokenResources);
 
+		final Map<Integer, ResourceModel> echoerResources = new HashMap<Integer, ResourceModel>();
+		echoerResources.put(0, new ResourceModel(0, "", Operations.E, false, false, Type.STRING, "", "", ""));
+		echoerResources.put(1, new ResourceModel(1, "", Operations.RW, false, false, Type.INTEGER, "", "", ""));
+		final ObjectModel echoerObjectModel = new ObjectModel(11111, "Echoer", "", false, true, echoerResources);
+
 		final Map<Integer, ObjectModel> objectModels = new HashMap<>();
 		objectModels.put(3, deviceObjectModel);
 		objectModels.put(23854, devTokenObjectModel);
+		objectModels.put(11111, echoerObjectModel);
 
 		final ObjectsInitializer initializer = new ObjectsInitializer(new LwM2mModel(objectModels));
 		initializer.setClassForObject(23854, DeviceToken.class);
@@ -119,6 +127,7 @@ public class EchoLwM2mDeviceMain {
 			tlsProtocol = props.getProperty("tls.protocol");
 			isTlsEnabled = props.containsKey("tls.enabled") ? Boolean.parseBoolean(props.getProperty("tls.enabled")) : true;
 
+			echoCount = Integer.parseInt(props.getProperty("default.echo.count", "1"));
 			DeviceToken.deviceToken = props.getProperty("device.token");
 
 			if (zatarHostname == null ||
@@ -127,6 +136,7 @@ public class EchoLwM2mDeviceMain {
 					deviceModel == null ||
 					deviceSerialNumber == null ||
 					DeviceToken.deviceToken == null ||
+					echoCount == null ||
 					tlsProtocol == null) {
 				System.err.println("One or more of the required properties is missing. Aborting.");
 				System.exit(1);
@@ -135,7 +145,7 @@ public class EchoLwM2mDeviceMain {
 			System.err.println("Could not read file " + args[0] + ". Aborting.");
 			System.exit(1);
 		} catch (final NumberFormatException e) {
-			System.err.println("Invalid port number in properties file. Aborting.");
+			System.err.println("The port number and default echo counts must both be integers. Aborting.");
 			System.exit(1);
 		}
 	}
