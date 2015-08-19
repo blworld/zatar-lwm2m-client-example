@@ -9,11 +9,14 @@ import org.eclipse.leshan.core.response.ValueResponse;
 
 public class Echoer extends SimpleInstanceEnabler {
 
+	private static String echoText = "hello";
 	private static int echoCount = 1;
 
 	@Override
 	public ValueResponse read(final int resourceId) {
 		switch (resourceId) {
+			case 1:
+				return new ValueResponse(ResponseCode.CONTENT, new LwM2mResource(1, Value.newStringValue(echoText)));
 			case 2:
 				return new ValueResponse(ResponseCode.CONTENT, new LwM2mResource(2, Value.newIntegerValue(echoCount)));
 		}
@@ -23,10 +26,17 @@ public class Echoer extends SimpleInstanceEnabler {
 	@Override
 	public LwM2mResponse write(final int resourceId, final LwM2mResource res) {
 		switch (resourceId) {
+			case 1:
+				@SuppressWarnings("unchecked")
+				final Value<String> newText = (Value<String>) res.getValue();
+				echoText = newText.value;
+				System.out.println("Echo Text set to `" + echoText + "'");
+				fireResourceChange(resourceId);
+				return new LwM2mResponse(ResponseCode.CHANGED);
 			case 2:
 				@SuppressWarnings("unchecked")
-				final Value<Integer> value = (Value<Integer>) res.getValue();
-				echoCount = value.value;
+				final Value<Integer> newCount = (Value<Integer>) res.getValue();
+				echoCount = newCount.value;
 				System.out.println("Echo Count set to " + echoCount);
 				fireResourceChange(resourceId);
 				return new LwM2mResponse(ResponseCode.CHANGED);
@@ -38,7 +48,7 @@ public class Echoer extends SimpleInstanceEnabler {
 	public LwM2mResponse execute(final int resourceId, final byte[] payload) {
 		if (resourceId == 0) {
 			for (int i = 0; i < echoCount; i++) {
-				System.out.println("hello");
+				System.out.println(echoText);
 			}
 			return new LwM2mResponse(ResponseCode.CHANGED);
 		}
