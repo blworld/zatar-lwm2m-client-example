@@ -30,14 +30,12 @@ public class Echoer extends SimpleInstanceEnabler {
 				@SuppressWarnings("unchecked")
 				final Value<String> newText = (Value<String>) res.getValue();
 				echoText = newText.value;
-				System.out.println("Echo Text set to `" + echoText + "'");
 				fireResourceChange(resourceId);
 				return new LwM2mResponse(ResponseCode.CHANGED);
 			case 2:
 				@SuppressWarnings("unchecked")
 				final Value<Integer> newCount = (Value<Integer>) res.getValue();
 				echoCount = newCount.value;
-				System.out.println("Echo Count set to " + echoCount);
 				fireResourceChange(resourceId);
 				return new LwM2mResponse(ResponseCode.CHANGED);
 		}
