@@ -13,21 +13,23 @@ public class Echoer extends SimpleInstanceEnabler {
 
 	@Override
 	public ValueResponse read(final int resourceId) {
-		if (resourceId == 2) {
-			return new ValueResponse(ResponseCode.CONTENT, new LwM2mResource(2, Value.newIntegerValue(echoCount)));
+		switch (resourceId) {
+			case 2:
+				return new ValueResponse(ResponseCode.CONTENT, new LwM2mResource(2, Value.newIntegerValue(echoCount)));
 		}
 		return super.read(resourceId);
 	}
 
 	@Override
 	public LwM2mResponse write(final int resourceId, final LwM2mResource res) {
-		if (resourceId == 2) {
-			@SuppressWarnings("unchecked")
-			final Value<Integer> value = (Value<Integer>) res.getValue();
-			echoCount = value.value;
-			System.out.println("Echo Count set to " + echoCount);
-			fireResourceChange(resourceId);
-			return new LwM2mResponse(ResponseCode.CHANGED);
+		switch (resourceId) {
+			case 2:
+				@SuppressWarnings("unchecked")
+				final Value<Integer> value = (Value<Integer>) res.getValue();
+				echoCount = value.value;
+				System.out.println("Echo Count set to " + echoCount);
+				fireResourceChange(resourceId);
+				return new LwM2mResponse(ResponseCode.CHANGED);
 		}
 		return super.write(resourceId, res);
 	}
