@@ -44,8 +44,6 @@ public class EchoLwM2mDeviceMain {
 	private static String tlsProtocol;
 	private static boolean isTlsEnabled;
 
-	private static Integer echoCount;
-
 	public static void main(final String[] args) {
 		initProperties(args);
 
@@ -133,7 +131,7 @@ public class EchoLwM2mDeviceMain {
 			tlsProtocol = props.getProperty("tls.protocol");
 			isTlsEnabled = props.containsKey("tls.enabled") ? Boolean.parseBoolean(props.getProperty("tls.enabled")) : true;
 
-			echoCount = Integer.parseInt(props.getProperty("default.echo.count", "1"));
+			Echoer.echoCount = Integer.parseInt(props.getProperty("default.echo.count", "1"));
 			DeviceToken.deviceToken = props.getProperty("device.token");
 
 			if (zatarHostname == null ||
@@ -142,7 +140,7 @@ public class EchoLwM2mDeviceMain {
 					deviceModel == null ||
 					deviceSerialNumber == null ||
 					DeviceToken.deviceToken == null ||
-					echoCount == null ||
+					Echoer.echoCount == null ||
 					tlsProtocol == null) {
 				System.err.println("One or more of the required properties is missing. Aborting.");
 				System.exit(1);
@@ -157,6 +155,8 @@ public class EchoLwM2mDeviceMain {
 	}
 
 	public static class Echoer extends SimpleInstanceEnabler {
+
+		private static Integer echoCount;
 
 		@Override
 		public ValueResponse read(final int resourceId) {
