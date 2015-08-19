@@ -9,7 +9,7 @@ import org.eclipse.leshan.core.response.ValueResponse;
 
 public class Echoer extends SimpleInstanceEnabler {
 
-	public static Integer echoCount;
+	private static int echoCount = 1;
 
 	@Override
 	public ValueResponse read(final int resourceId) {

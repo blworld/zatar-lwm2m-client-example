@@ -127,7 +127,6 @@ public class EchoLwM2mDeviceMain {
 			tlsProtocol = props.getProperty("tls.protocol");
 			isTlsEnabled = props.containsKey("tls.enabled") ? Boolean.parseBoolean(props.getProperty("tls.enabled")) : true;
 
-			Echoer.echoCount = Integer.parseInt(props.getProperty("default.echo.count", "1"));
 			DeviceToken.deviceToken = props.getProperty("device.token");
 
 			if (zatarHostname == null ||
@@ -136,7 +135,6 @@ public class EchoLwM2mDeviceMain {
 					deviceModel == null ||
 					deviceSerialNumber == null ||
 					DeviceToken.deviceToken == null ||
-					Echoer.echoCount == null ||
 					tlsProtocol == null) {
 				System.err.println("One or more of the required properties is missing. Aborting.");
 				System.exit(1);
@@ -145,7 +143,7 @@ public class EchoLwM2mDeviceMain {
 			System.err.println("Could not read file " + args[0] + ". Aborting.");
 			System.exit(1);
 		} catch (final NumberFormatException e) {
-			System.err.println("The port number and default echo counts must both be integers. Aborting.");
+			System.err.println("The port number must be a valid integer. Aborting.");
 			System.exit(1);
 		}
 	}
