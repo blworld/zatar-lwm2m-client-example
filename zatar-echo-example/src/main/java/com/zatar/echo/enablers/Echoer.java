@@ -32,4 +32,18 @@ public class Echoer extends SimpleInstanceEnabler {
 		return super.write(resourceId, res);
 	}
 
+	@Override
+	public LwM2mResponse execute(final int resourceId, final byte[] payload) {
+		try {
+			if (resourceId == 0) {
+				for (int i = 0; i < echoCount; i++) {
+					System.out.println("hello");
+				}
+				return new LwM2mResponse(ResponseCode.CHANGED);
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return super.execute(resourceId, payload);
+	}
 }

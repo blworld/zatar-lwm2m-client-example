@@ -55,7 +55,7 @@ public class EchoLwM2mDeviceMain {
 		final ObjectModel devTokenObjectModel = new ObjectModel(23854, "Zatar Device Token", "", false, true, devTokenResources);
 
 		final Map<Integer, ResourceModel> echoerResources = new HashMap<Integer, ResourceModel>();
-		echoerResources.put(0, new ResourceModel(0, "", Operations.E, false, false, Type.STRING, "", "", ""));
+		echoerResources.put(0, new ResourceModel(0, "", Operations.E, false, false, Type.OPAQUE, "", "", ""));
 		echoerResources.put(1, new ResourceModel(1, "", Operations.RW, false, false, Type.INTEGER, "", "", ""));
 		final ObjectModel echoerObjectModel = new ObjectModel(11111, "Echoer", "", false, true, echoerResources);
 
