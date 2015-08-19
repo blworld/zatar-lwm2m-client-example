@@ -16,6 +16,7 @@ import org.eclipse.leshan.client.LwM2mClient;
 import org.eclipse.leshan.client.californium.LeshanClientBuilder;
 import org.eclipse.leshan.client.californium.LeshanClientBuilder.TCPConfigBuilder;
 import org.eclipse.leshan.client.resource.ObjectsInitializer;
+import org.eclipse.leshan.client.resource.SimpleInstanceEnabler;
 import org.eclipse.leshan.core.model.LwM2mModel;
 import org.eclipse.leshan.core.model.ObjectModel;
 import org.eclipse.leshan.core.model.ResourceModel;
@@ -67,6 +68,7 @@ public class EchoLwM2mDeviceMain {
 
 		final ObjectsInitializer initializer = new ObjectsInitializer(new LwM2mModel(objectModels));
 		initializer.setClassForObject(23854, DeviceToken.class);
+		initializer.setClassForObject(11111, Echoer.class);
 
 		final LeshanClientBuilder builder = new LeshanClientBuilder()
 											.setServerAddress(new InetSocketAddress(zatarHostname, zatarPort))
@@ -148,6 +150,10 @@ public class EchoLwM2mDeviceMain {
 			System.err.println("The port number and default echo counts must both be integers. Aborting.");
 			System.exit(1);
 		}
+	}
+
+	public static class Echoer extends SimpleInstanceEnabler {
+
 	}
 
 }
