@@ -34,15 +34,11 @@ public class Echoer extends SimpleInstanceEnabler {
 
 	@Override
 	public LwM2mResponse execute(final int resourceId, final byte[] payload) {
-		try {
-			if (resourceId == 0) {
-				for (int i = 0; i < echoCount; i++) {
-					System.out.println("hello");
-				}
-				return new LwM2mResponse(ResponseCode.CHANGED);
+		if (resourceId == 0) {
+			for (int i = 0; i < echoCount; i++) {
+				System.out.println("hello");
 			}
-		} catch (final Exception e) {
-			e.printStackTrace();
+			return new LwM2mResponse(ResponseCode.CHANGED);
 		}
 		return super.execute(resourceId, payload);
 	}
