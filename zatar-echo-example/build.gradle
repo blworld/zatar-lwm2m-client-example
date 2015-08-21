@@ -3,8 +3,8 @@ apply plugin: 'gradle-one-jar'
 
 buildscript {
     repositories {
-        mavenCentral()
         mavenLocal()
+        mavenCentral()
     }
 
     dependencies {
@@ -13,8 +13,8 @@ buildscript {
 }
 
 repositories {
-    mavenCentral()
     mavenLocal()
+    mavenCentral()
 }
 
 dependencies {
