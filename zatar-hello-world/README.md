@@ -106,7 +106,7 @@ That ```initializer``` is used both to provide a single object for the whole cli
 
 Note: As with the ```ResourceModel```s above, the key for each ```ObjectModel``` entry must equal the object ID provided in the object's constructor.
 
-By default, an object will report default values on Read operations, and will report success without doing anything on Write's or Execute's. For object 3, our Device object, that's perfectly fine; we only have two resources, both of which only support Read. But for the Device Token object, we want to provide some feedback. The next line accomplishes that:
+By default, an object will report default values on Read operations, and will report success without doing anything on Writes or Executes. For object 3, our Device object, that's perfectly fine; we only have two resources, both of which only support Read. But for the Device Token object, we want to provide some feedback. The next line accomplishes that:
 ```
 		initializer.setClassForObject(23854, DeviceToken.class);
 ```

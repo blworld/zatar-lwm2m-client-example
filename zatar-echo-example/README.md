@@ -112,14 +112,14 @@ We begin in ```EchoLwM2mDeviceMain```. You should recognize the three blocks tha
 ```
 
 Things to note:
-* The resource ID's 0, 1, and 2 correspond to the trailing digits in the avatar definition.
+* The resource IDs 0, 1, and 2 correspond to the trailing digits in the avatar definition.
 * Because 0 corresponds to a command, it uses ```Operations.E```. The other two resources correspond to writable settings, so they have ```Operations.RW```.
   * The valid ```Operations``` are all of the permutations of ```R```, ```W```, and ```E```, indicating which operations are permitted.
 * For each entry of the ```echoerResource```, the key matches the first parameter of the value.
 * The first parameter of the ```ObjectModel``` is 11111, the object ID for the Echoer object.
 * The object model constructed here is then added to the object models map at line 66 (not shown here).
 
-Jump to lines 68-70, where we see
+Jump to
 ```
 		final ObjectsInitializer initializer = new ObjectsInitializer(new LwM2mModel(objectModels));
 		initializer.setClassForObject(23854, DeviceToken.class);
@@ -135,7 +135,7 @@ The rest of the ```EchoLwM2mDeviceMain``` class is the same as in ```zatar-hello
 ```
 public class Echoer extends SimpleInstanceEnabler {
 ```
-Note that it extends ```SimpleInstanceEnabler```. That class is defined in the library that we're using, and provides some useful default behavior.
+Note that it extends ```SimpleInstanceEnabler```. That class is defined in the LWM2M library that we're using, and provides some useful default behavior.
 
 Next, see the two fields and their default values:
 ```
