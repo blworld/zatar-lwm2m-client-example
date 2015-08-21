@@ -57,8 +57,8 @@ public class ExampleLwM2mDeviceMain {
 		final Map<Integer, ObjectModel> objectModels = new HashMap<>();
 		objectModels.put(3, deviceObjectModel);
 		objectModels.put(23854, devTokenObjectModel);
-
 		final ObjectsInitializer initializer = new ObjectsInitializer(new LwM2mModel(objectModels));
+
 		initializer.setClassForObject(23854, DeviceToken.class);
 
 		final LeshanClientBuilder builder = new LeshanClientBuilder()
