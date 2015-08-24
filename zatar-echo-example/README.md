@@ -100,14 +100,14 @@ greetings
 
 ## Notifying Zatar from the Device
 
-Now when the echoer started up the following text was outputed:
+Now when the echoer started up the following text will be printed to the console:
 ```
 Input any text to reset the Echo count and notify Zatar.
 ```
 
 In the console where the echoer is running, enter any letter and then hit ENTER.  Now you should see output like (if you had entered the letter 'b'):
 ```
-'b' inputed by user.  Resetting Echo Count to 1, reset date to now and notifying Zatar.
+User input 'b'.  Resetting Echo Count to 1, reset date to now and notifying Zatar.
 ```
 
 The Device just reset both the ```echo count``` and the ```echo reset time``` and notified Zatar of the changes to both of these resources.  Zatar had created observations on both of these resources allowing for the device to send an update of their values to the avatar (execute a GET on the avatar to see the updated values).  As the ```echo count``` has been updated again, when you run the "echo" command again, you should see this:
@@ -158,7 +158,7 @@ Now jump to
 		System.out.println("Input any text to reset the Echo count and notify Zatar.");
 		while (scanner.hasNext()) {
 			final String textInput = scanner.next();
-			System.out.println("'" + textInput + "' inputed by user.  Resetting Echo Count to 1, reset date to now and notifying Zatar.");
+			System.out.println("User input '" + textInput + "'.  Resetting Echo Count to 1, reset date to now and notifying Zatar.");
 			echoer.resetEchoCount();
 		}
 		scanner.close();
