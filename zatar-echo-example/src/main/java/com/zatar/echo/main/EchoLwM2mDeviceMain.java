@@ -8,6 +8,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Scanner;
 import java.util.UUID;
 
 import javax.net.ssl.SSLContext;
@@ -40,6 +41,7 @@ public class EchoLwM2mDeviceMain {
 	private static String tlsProtocol;
 	private static boolean isTlsEnabled;
 
+
 	public static void main(final String[] args) {
 		initProperties(args);
 
@@ -58,6 +60,7 @@ public class EchoLwM2mDeviceMain {
 		echoerResources.put(0, new ResourceModel(0, "", Operations.E, false, false, Type.OPAQUE, "", "", ""));
 		echoerResources.put(1, new ResourceModel(1, "", Operations.RW, false, false, Type.STRING, "", "", ""));
 		echoerResources.put(2, new ResourceModel(2, "", Operations.RW, false, false, Type.INTEGER, "", "", ""));
+		echoerResources.put(3, new ResourceModel(3, "", Operations.R, false, false, Type.TIME, "", "", ""));
 		final ObjectModel echoerObjectModel = new ObjectModel(11111, "Echoer", "", false, true, echoerResources);
 
 		final Map<Integer, ObjectModel> objectModels = new HashMap<>();
@@ -65,13 +68,13 @@ public class EchoLwM2mDeviceMain {
 		objectModels.put(23854, devTokenObjectModel);
 		objectModels.put(11111, echoerObjectModel);
 
+		final Echoer echoer = new Echoer();
 		final ObjectsInitializer initializer = new ObjectsInitializer(new LwM2mModel(objectModels));
 		initializer.setClassForObject(23854, DeviceToken.class);
-		initializer.setClassForObject(11111, Echoer.class);
+		initializer.setInstancesForObject(11111, echoer);
 
 		final LeshanClientBuilder builder = new LeshanClientBuilder()
-											.setServerAddress(new InetSocketAddress(zatarHostname, zatarPort))
-											.setObjectsInitializer(initializer);
+				.setServerAddress(new InetSocketAddress(zatarHostname, zatarPort)).setObjectsInitializer(initializer);
 		final TCPConfigBuilder tcpBuilder = builder.addBindingModeTCPClient();
 		if(isTlsEnabled) {
 			SSLContext context = null;
@@ -109,6 +112,15 @@ public class EchoLwM2mDeviceMain {
 				}
 			}
 		});
+
+		final Scanner scanner = new Scanner(System.in);
+		System.out.println("Input any text to reset the Echo count and notify Zatar.");
+		while (scanner.hasNext()) {
+			final String textInput = scanner.next();
+			System.out.println("'" + textInput + "' inputted by user.  Resetting Echo Count to 1, reset date to now and notifying Zatar.");
+			echoer.resetEchoCount();
+		}
+		scanner.close();
 	}
 
 	private static void initProperties(final String[] args) {
