@@ -22,7 +22,7 @@ gradle buildEchoer
 Before you run it, update the properties file ```echo.properties``` with your desired settings.
 ```
 zatar.hostname=beta-devices.zatar.com
-zatar.port=5684
+zatar.port=443
 
 tls.enabled=true
 tls.protocol=TLSv1.2
