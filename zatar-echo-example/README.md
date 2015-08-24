@@ -104,12 +104,12 @@ Now when the echoer started up the following text was outputted:
 Input any text to reset the Echo count and notify Zatar.
 ```
 
-In the console where the echoer is running, press 'b' then hit ENTER.  Now you should see the output:
+In the console where the echoer is running, enter any letter and then hit ENTER.  Now you should see output like (if you had entered the letter 'b'):
 ```
 'b' inputted by user.  Resetting Echo Count to 1, reset date to now and notifying Zatar.
 ```
 
-The Device just reset both the ```echo count``` and the ```echo reset time``` and notified Zatar of the changes to both of these resources.  Zatar had created observations on both of these resources allowing for the device to send an update of their values to the avatar (execute a GET on the avatar to see the updated values).  As the ```echo count``` has been updated again, when you run the "echo" command again ,you should see this:
+The Device just reset both the ```echo count``` and the ```echo reset time``` and notified Zatar of the changes to both of these resources.  Zatar had created observations on both of these resources allowing for the device to send an update of their values to the avatar (execute a GET on the avatar to see the updated values).  As the ```echo count``` has been updated again, when you run the "echo" command again, you should see this:
 ```
 =====================================================
 greetings
