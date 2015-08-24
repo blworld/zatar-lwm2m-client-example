@@ -1,1 +1,2 @@
 include "zatar-hello-world"
+include "zatar-echo-example"

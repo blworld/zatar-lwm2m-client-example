@@ -25,12 +25,12 @@ dependencies {
         '../libs/californium-core-99.0.3-SNAPSHOT.jar',
         '../libs/element-connector-99.0.3-SNAPSHOT.jar',
         '../libs/scandium-1.0.0-M3.jar')
-        
+
     compile('io.netty:netty-all:4.1.0.Beta5')
     compile('com.google.code.gson:gson:2.2.4')
     compile('org.slf4j:slf4j-api:1.7.12')
 }
 
-task buildHelloWorld(type: OneJar) {
-    mainClass = 'com.zatar.example.main.ExampleLwM2mDeviceMain'
+task buildEchoer(type: OneJar) {
+    mainClass = 'com.zatar.echo.main.EchoLwM2mDeviceMain'
 }
