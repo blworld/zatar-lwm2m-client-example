@@ -9,6 +9,7 @@ As before, you will need to do the following:
   * Name: "echo", Key: /11111/0/0, Type: "COMMAND"
   * Name: "echo text", Key: /11111/0/1, Type: "SETTING"
   * Name: "echo count", Key: /11111/0/2, Type: "SETTING"
+  * Name: "echo last reset time", Key: /11111/0/3, Type: "SETTING"
 * Create an avatar using the avatar definition above and your serial number.
 * Create a device token and associate it to the model name that you used above.
 
@@ -99,14 +100,14 @@ greetings
 
 ## Notifying Zatar from the Device
 
-Now when the echoer started up the following text was outputted:
+Now when the echoer started up the following text was outputed:
 ```
 Input any text to reset the Echo count and notify Zatar.
 ```
 
 In the console where the echoer is running, enter any letter and then hit ENTER.  Now you should see output like (if you had entered the letter 'b'):
 ```
-'b' inputted by user.  Resetting Echo Count to 1, reset date to now and notifying Zatar.
+'b' inputed by user.  Resetting Echo Count to 1, reset date to now and notifying Zatar.
 ```
 
 The Device just reset both the ```echo count``` and the ```echo reset time``` and notified Zatar of the changes to both of these resources.  Zatar had created observations on both of these resources allowing for the device to send an update of their values to the avatar (execute a GET on the avatar to see the updated values).  As the ```echo count``` has been updated again, when you run the "echo" command again, you should see this:
@@ -157,7 +158,7 @@ Now jump to
 		System.out.println("Input any text to reset the Echo count and notify Zatar.");
 		while (scanner.hasNext()) {
 			final String textInput = scanner.next();
-			System.out.println("'" + textInput + "' inputted by user.  Resetting Echo Count to 1, reset date to now and notifying Zatar.");
+			System.out.println("'" + textInput + "' inputed by user.  Resetting Echo Count to 1, reset date to now and notifying Zatar.");
 			echoer.resetEchoCount();
 		}
 		scanner.close();
@@ -188,12 +189,14 @@ Now we turn our attention to the ```read``` method:
 				return new ValueResponse(ResponseCode.CONTENT, new LwM2mResource(1, Value.newStringValue(echoText)));
 			case 2:
 				return new ValueResponse(ResponseCode.CONTENT, new LwM2mResource(2, Value.newIntegerValue(echoCount)));
+			case 3:
+				return new ValueResponse(ResponseCode.CONTENT, new LwM2mResource(3, Value.newDateValue(echoResetAtTime)));
 		}
 		return super.read(resourceId);
 	}
 ```
 
-This method provides the data that actually shows up in the avatar for the two settings under object 11111. It should be easy to see ```read``` provides the right value based on which resource ID is requested; when resource ID 1 is requested, the echo text is returned, and when resource ID 2 is requested, the echo count is returned. The code here demonstrates the mechanism by which values of different data types are converted into LWM2M resources and then sent to the server.
+This method provides the data that actually shows up in the avatar for the two settings under object 11111. It should be easy to see ```read``` provides the right value based on which resource ID is requested; when resource ID 1 is requested, the echo text is returned, when resource ID 2 is requested, the echo count is returned and when resource ID 3 is requested, the last time the device reset the echo count. The code here demonstrates the mechanism by which values of different data types are converted into LWM2M resources and then sent to the server.
 
 ```read``` is called when an avatar is first created, and periodically while a device is online. This is how a device reports information about itself to Zatar.
 
@@ -253,4 +256,4 @@ Finally, notice the ```resetEchoCount``` method:
 	}
 ```
 
-This is the method executed upon user input in the ```EchoerLwM2mDeviceMain``` class.  This is how a notification upon an observation is done and how a device can asynchronously send data to Zatar.  Here you can see the internal members ```echoCount``` and ```echoResetAtTime``` updated and then ```fireResourceChange()``` executed on their respective resource ids.  This call to informs the client library to call ```read``` on the resources and then notify Zatar via the observation that has been set on the respective object.
+This is the method executed upon user input in the ```EchoerLwM2mDeviceMain``` class.  This is how a notification upon an observation is done and how a device can asynchronously send data to Zatar.  Here you can see the internal members ```echoCount``` and ```echoResetAtTime``` updated and then ```fireResourceChange()``` executed on their respective resource IDs.  This call to informs the client library to call ```read``` on the resources and then notify Zatar via the observation that has been set on the respective object.

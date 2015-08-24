@@ -117,7 +117,7 @@ public class EchoLwM2mDeviceMain {
 		System.out.println("Input any text to reset the Echo count and notify Zatar.");
 		while (scanner.hasNext()) {
 			final String textInput = scanner.next();
-			System.out.println("'" + textInput + "' inputted by user.  Resetting Echo Count to 1, reset date to now and notifying Zatar.");
+			System.out.println("'" + textInput + "' inputed by user.  Resetting Echo Count to 1, reset date to now and notifying Zatar.");
 			echoer.resetEchoCount();
 		}
 		scanner.close();
