@@ -6,9 +6,9 @@ This codebase leverages work from the [Eclipse Californium](https://github.com/e
 ## Learn
 There are two subprojects, ```zatar-hello-world``` and ```zatar-echo-example```.  ```zatar-hello-world``` shows how to connect to Zatar and bring a device online.  ```zatar-echo-example``` goes a few steps further and provides examples of writable and executable resources as well as how to asynchronously send data from a device to Zatar by notifying on observations.
 
-We recommend using ```zatar-hello-world``` first, just to connect your device to Zatar and ensure that your device token works. ```zatar-echo-example``` is then a larger example, showing all of the LWM2M features that Zatar takes advantage of.  Both subprojects have extensive documentation in their README.md files.
-* [Zatar-Hello-World](zatar-hello-world/):  See how to build a LWM2M object model with the Leshan Client, how to register a device with Zatar and how to share a device token.
-* [Zatar-Echo-Example](zatar-echo-example/):  See how to build writable and executable resources with the Leshan Client and how to notify Zatar asyncrhonously of a change in a device's state.
+We recommend using ```zatar-hello-world``` first, just to connect your device to Zatar and ensure that your device token works. ```zatar-echo-example``` is then a larger example, showing all of the LWM2M features that Zatar takes advantage of.  **Each subproject README documents the following:**
+* [Zatar-Hello-World README](zatar-hello-world/):  See how to build a LWM2M object model with the Leshan Client, how to build a CoAP/TLS connection, how to register a device with Zatar and how to share a device token.
+* [Zatar-Echo-Example README](zatar-echo-example/):  See how to build writable and executable resources with the Leshan Client and how to notify Zatar asyncrhonously of a change in a device's state.
 
 ## Clone
 To retrieve the code and subprojects discussed here, clone this repository:
