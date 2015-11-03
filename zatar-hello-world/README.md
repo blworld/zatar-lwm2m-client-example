@@ -17,7 +17,7 @@ This will generate the jar at ```build/libs/zatar-hello-world-standalone.jar```.
 
 Before you run this, you will need to update the properties file.
 ```
-zatar.hostname=beta-devices.zatar.com
+zatar.hostname=devices2.zatar.com
 zatar.port=443
 
 tls.enabled=true
